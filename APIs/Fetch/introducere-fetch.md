@@ -1,11 +1,13 @@
 # Fetch
 
-Scopul este acela de a unifica componentele folosite pentru a aduce resurse pe web. `Fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
+Pentru a înțelege și opera cu API-ul Fetch, trebuie să înțelegi ce este o promisiune în JavaScript, cum funcționează și care este structura sa. Înțelegerea promisiunilor va netezi calea către înțelegerea acestui instrument.
+
+Scopul acestui API este acela de a unifica componentele folosite pentru a aduce resurse din rețea. `Fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
 
 `fetch()` este o metodă a obiectului global sau a unui **worker** care returnează o promisiune.
 
 ```javascript
-fetch('x');
+fetch('x'); // x fiind, de regulă calea către o resursă la distanță (URI)
 // Promise { <state>: "rejected", <reason>: TypeError }
 fetch('x').then(raspuns => console.log('am primit raspuns'));
 // Promise { <state>: "pending" }
@@ -13,28 +15,77 @@ fetch('x').then(raspuns => console.log('am primit raspuns'));
 
 ## Exemple practice
 
-Să presupunem că lucrezi cu API-ul Europeana.eu. Putem foarte simplu să construim un exemplu complet de utilizarea a lui `fetch` pentru a accesa o înregistrare unică.
+### Metoda `GET` - aducere date
+
+Să presupunem că lucrezi cu API-ul Europeana.eu. Putem foarte simplu să construim un exemplu complet de utilizarea a lui `fetch()` pentru a accesa o înregistrare unică.
 
 ```javascript
 var adresa = "https://www.europeana.eu/api/v2/search.json?wskey=XXXXXXXXX&query=The%20Fraternity%20between%20Romanian%20and%20French%20Army";
 
 // înlocuiește cheia API din link, cu una personală
-// wskey=XXXXXXXXX
+// wskey=XXXXXXXXX - obține o cheie de la https://pro.europeana.eu/get-api
 // dacă nu introduci cheia personală vei avea o eroare
 // Cross-Origin Request Blocked
 
 fetch(adresa)
   .then( function aduRes (raspuns) {
-    if (raspuns.headers.get('Content-Type') === 'application/json') {
+    // dacă e JSON, trimite-l ca atare,
+    if (raspuns.ok && raspuns.headers.get('Content-Type') === 'application/json') {
       return raspuns.json();
+    } else if (raspuns.status == 404) {
+      throw new Error('Calea către resursă nu există');
     }
+    // dacă nu, trimite ce primești
     return raspuns.text();
-  }).then(function vizualizeaza (dateleAduse) {
-    console.log(dateleAduse);
-  }).catch(function () {
-    console.log("A apărut o eroare");
+  }).then(function vizualizeaza (reprezentareDate) {
+    console.log(reprezentareDate); // sau
+    // console.log(JSON.stringify(reprezentareDate))
+  }).catch(function (eroarea) {
+    console.log("Eroarea apărută: ", eroarea.message);
   });
 ```
+
+Observă faptul că primul `then(raspuns)` are rolul de a constitui o reprezentare a datelor venite într-un format pe care să-l putem consuma. Abia cel de-al doilea `then(reprezentareDate)` are rolul de a lucra ceva cu datele aduse.
+
+### Metoda `POST` - trimitere date
+
+API-ul `Fetch` poate fi utilizat și pentru a trimite date. Pentru acest lucru va trebui să construim un obiect `Request` (vezi API-ul `Request` pentru detalii).
+
+```javascript
+var referintaForm = document.getElementById('descriere');
+var dateleDinFormular = new FormData(referintaForm);
+var radacinaURI = 'http://site.org/';
+var cale = `resurse`;
+var URIcomplet = `${radacinaURI}${cale}`;
+var optiuni = {
+  method: 'POST',
+  mode: 'cors',
+  body: dateleDinFormular
+};
+const request = new Request(optiuni);
+fetch(request).then((raspuns) => {
+  if(raspuns.ok){
+    return raspuns.json();
+  } else {
+    throw new Error('Ceva nu a mers bine');
+  }
+}).then((raspuns) => {
+  var ref = document.querySelector('#ulprimire');
+  var fragment = new DocumentFragment();
+  raspuns.forEach((persoana) => {
+    let li = document.createElement('li');
+    li.textContext = persoana.nume;
+    li.className = 'verde';
+    li.className.add('adaugat');
+    fragment.appenChild(li);
+  });
+  ref.appenChild(fragment);
+}).catch((eroare) => {
+  console.log('Eroare: ', eroare.message);
+});
+```
+
+Pentru mai multe detalii despre obiectul `FormData`, vezi acest API.
 
 ## Referințe
 
@@ -42,3 +93,8 @@ fetch(adresa)
 -   [Fetch - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 -   [Working with the Fetch API](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
 -   [Fetch API (100 Days of Google Dev)](https://www.youtube.com/watch?v=g6-ZwZmRncs)
+
+### Video
+
+- [Fundamentals of the JavaScript fetch method for AJAX, Steve Griffith, Jul 22, 2017](https://www.youtube.com/watch?v=_5yhmkDQqIQ),
+- [JavaScript AJAX with fetch](https://www.youtube.com/playlist?list=PLyuRouwmQCjkWu63mHksI9EA4fN-vwGs7)
