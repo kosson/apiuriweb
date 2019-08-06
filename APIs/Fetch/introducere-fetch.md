@@ -36,6 +36,47 @@ fetch('https://httpbin.org/post', {
 
 Ceea ce oferă un `fetch` este o promisiune pe care se pot înlănțui metodele `then` cu ajutorul cărora se pot prelucra rezultatele.
 
+## Obiectul de configurare
+
+Pentru a constitui obiectul de configurare, avem următoarele posibile componente configurabile:
+
+- metoda, care specifică verbul HTTP folosit,
+- headerele
+- modului de acces la resurse
+- corpul.
+
+Headerele pot fi constituite și prin instanțierea constructorului `Headers()`.
+
+```javascript
+var headers = new Headers();
+```
+
+Odată instanțiat obiectul, se pot adăuga headere, se pot poate verifica dacă un anumit header există deja folosind metodele specifice:
+
+```javascript
+headers.append('Content-Type', 'text/plain');
+headers.append('X-My-Custom-Header', 'CustomValue');
+
+// Verificare, get și set
+headers.has('Content-Type'); // true
+headers.get('Content-Type'); // "text/plain"
+headers.set('Content-Type', 'application/json');
+
+// Ștergerea unui header
+headers.delete('X-My-Custom-Header');
+```
+
+Obiectul headerelor poate fi populat inițial cu setări considerate a fi esențiale.
+
+```javascript
+var headers = new Headers({
+	'Content-Type': 'text/plain',
+	'X-My-Custom-Header': 'OValoare'
+});
+```
+
+
+
 ## Exemple practice
 
 ### Metoda `GET` - aducere date
