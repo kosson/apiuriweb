@@ -1,8 +1,8 @@
 # Fetch
 
-Pentru a înțelege și opera cu API-ul Fetch, trebuie să înțelegi ce este o promisiune în JavaScript, cum funcționează și care este structura sa. Înțelegerea promisiunilor va netezi calea către înțelegerea acestui instrument.
+Pentru a înțelege și opera cu API-ul Fetch, trebuie să înțelegi ce este o promisiune în JavaScript, cum funcționează și care este structura sa. Înțelegerea promisiunilor va netezi calea către înțelegerea acestui instrument care uțurează lucrul cu resursele la distanță.
 
-Scopul acestui API este acela de a unifica componentele folosite pentru a aduce resurse din rețea. `Fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
+Scopul acestui API este acela de a unifica componentele folosite pentru a aduce resurse din rețea. Api-ul `fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
 
 `fetch()` este o metodă a obiectului global sau a unui **worker** care returnează o promisiune.
 
@@ -12,6 +12,29 @@ fetch('x'); // x fiind, de regulă calea către o resursă la distanță (URI)
 fetch('x').then(raspuns => console.log('am primit raspuns'));
 // Promise { <state>: "pending" }
 ```
+
+Pentru a face un apel `fetch`, metoda acceptă drept prim parametru o adresă către resursa dorită urmată de un obiect de configurare.
+
+```javascript
+fetch('https://httpbin.org/post', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  mode: 'cors',
+  body: JSON.stringify({mesaj: 'Salutare!'})
+}).then(function(raspuns){
+  console.log(raspuns);
+  return raspuns.json();
+}).then(function(date){
+  console.log(date);
+}).catch(function(eroare){
+  console.log(eroare);
+});
+```
+
+Ceea ce oferă un `fetch` este o promisiune pe care se pot înlănțui metodele `then` cu ajutorul cărora se pot prelucra rezultatele.
 
 ## Exemple practice
 
