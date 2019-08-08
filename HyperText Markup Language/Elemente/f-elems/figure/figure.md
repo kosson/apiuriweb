@@ -1,0 +1,1 @@
+# Elementul `figure`

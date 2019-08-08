@@ -4,10 +4,6 @@
 
 Returnează un obiect `NamedNodemap` care conține atributele elementului HTML corespondent
 
-## Element.classList
-
-Returnează un `DOMTokenList` care conține o listă de atribute clasă.
-
 ## Element.className
 
 Este un `DOMString` care reprezintă clasa elementului.
