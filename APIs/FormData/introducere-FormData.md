@@ -30,3 +30,8 @@ Acest obiect se poate instanția gol și apoi completat folosind metoda `append(
 var dateFormular = new FormData();
 dateFormular.append('Nume', 'Kosson');
 ```
+
+## Referințe
+
+- [FormData, javascript.info](https://javascript.info/formdata)
+- [FormData, Mozilla MDN](https://developer.mozilla.org/en-US/docs/Web/API/FormData)

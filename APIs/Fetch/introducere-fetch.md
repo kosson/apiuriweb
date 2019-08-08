@@ -75,7 +75,93 @@ var headers = new Headers({
 });
 ```
 
+## Obiectul `Response`
 
+Standardul spune că „rezultatul unui **fetch** este un **răspuns**”. Ceea ce merită reținut este faptul că un „răspuns evoluează în timp”. De îndată ce un server răspunde cu headere, acest obiect răspuns se formează. Putem investiga acest obiect de răspuns.
+
+```javascript
+let response = await fetch(url);
+if (response.ok) {
+    // response.ok înseamnă că avem un cod HTTP între 200 și 299
+    let jsonData = response.json();
+} else {
+    console.error('Eroarea HTTP: ', response.status);
+}
+```
+
+Obiectului de răspuns îi este asociat un obiect `Headers` , care inițial are valoarea `null`. Aceluiași obiect îi este asociată o promisiune numită de standard *trailer promise*.
+
+Obiectul de răspuns din punctul de vedere al standardului poate fi de mai multe tipuri: "basic", "cors", "default", "error", "opaque", "opaqueredirect".
+
+Obiectul de răspuns are și un corp (*body*). Acest *body* poate fi:
+
+- un stream (`null` sau `ReadableStream`), 
+- un `Blob`, 
+- un `BufferSource`, 
+- un `FormData`,
+- un `URLSearchParams`,
+- un `USVString`. 
+
+Trebuie reținut un aspect foarte important: obiectul corp, care poate fi accesat cu `response.body` este un obiect `ReadableStream`, ceea ce permite citirea datelor pe fragmentele bine-cunoscute ca `chunks`. 
+
+Pentru a exploata datele obiectului răspuns, API-ul pune la dispoziție câteva metode utile în aces sens:
+
+- `response.json()` care parsează răspunsul ca obiect JSON
+- `response.text()`, care parsează corpul răspunsului ca pe un text
+- `response.formData()`, care returnează un răspuns de tipul `FormData` care are o codare `form/multipart`
+- `response.blob()`, returnează răspunsul ca `Blob` (date binare de un anumit tip)
+- `response.arrayBuffer()`, care returnează răspunsul ca `ArrayBuffer` (date binare) 
+
+Dacă presupunem că accesăm date de la un API extern, iar formatul este *json*, putem decide felul în care vom consuma datele, fie folosind sintaxa `await`, fie folosind promisiunile.
+
+```javascript
+let răspuns = await fetch('https://undeva.ro/api/v2/resurse');
+let resurse = await răspuns.json(); // citește corpul ca json
+console.log(resurse[0].nume);
+```
+
+Același parcurs îl putem angaja folosind promisiunile. Ține de propria abordare.
+
+```javascript
+fetch('https://undeva.ro/api/v2/resurse').then((raspuns) => raspuns.json()).then(resurse => console.log(resurse[0].nume));
+```
+
+Un lucru foarte important de precizat este faptul că prelucrarea corpului obiectului răspuns se poate face o singură dată. Nu este posibilă aplicarea în succesiune a mai multor metode de tratare a corpului. Acest lucru nu este posibil pentru că acele date deja au fost consumate de prima metodă de prelucrare.
+
+## Obiectul `Headers`
+
+Acest obiect este unul asemănător celor de tip `Map`. Un obiect `Header` au un *header list*, care este inițial goală. Atenție, acest obiect în al său *header list* nu poate avea decât o singură înregistrare `Set-Cookie`. Pentru a face o cerere pentru care ai nevoie să setezi un header, acesta poate fi pasat ca membru în obiectul de configurare a lui `fetch`.
+
+```javascript
+let dateExterne = fetch(UrlProtejat, {
+    headers: {
+        Authentication: 'unToken'
+    }
+}); 
+```
+
+Există un set de headere care nu pot fi setate:
+
+- `Accept-Charset`, `Accept-Encoding`
+- `Access-Control-Request-Headers`
+- `Access-Control-Request-Method`
+- `Connection`
+- `Content-Length`
+- `Cookie`, `Cookie2`
+- `Date`
+- `DNT`
+- `Expect`
+- `Host`
+- `Keep-Alive`
+- `Origin`
+- `Referer`
+- `TE`
+- `Trailer`
+- `Transfer-Encoding`
+- `Upgrade`
+- `Via`
+- `Proxy-*`
+- `Sec-*`
 
 ## Exemple practice
 
@@ -113,7 +199,27 @@ Observă faptul că primul `then(raspuns)` are rolul de a constitui o reprezenta
 
 ### Metoda `POST` - trimitere date
 
-API-ul `Fetch` poate fi utilizat și pentru a trimite date. Pentru acest lucru va trebui să construim un obiect `Request` (vezi API-ul `Request` pentru detalii).
+API-ul `Fetch` poate fi utilizat și pentru a trimite date. Pentru a trimite date ai nevoie să setezi metoda `POST`. Apoi va trebui să construim un corp. Pentru acest lucru va trebui să construim un obiect `Request`. Corpul poate fi: 
+
+- un șir de caractere așa cum este un JSON, 
+- poate fi un obiect `FormData` pentru a trimite date care sunt `form/multipart`,
+- poate fi constituit din date binare, fie acestea `Blob`, fie `BufferSource`,
+- `URLSearchParams` pentru a putea trimite datele ca `x-www-form-urlencoded`.
+
+Dacă datele trimise sunt de tip JSON, de exemplu, headerele ar trebui să cuprindă și `'Content-Type': 'application/json;charset=utf-8'`.
+
+```javascript
+const dateDeTrimis = {ceva: 1, altceva: 'test'};
+fetch('http://undeva.ro/api/v1/resursa', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(dateDeTrimis)
+});
+```
+
+Un exemplu ceva mai elaborat privind trimiterea datelor dintr-un formular.
 
 ```javascript
 var referintaForm = document.getElementById('descriere');
@@ -150,6 +256,52 @@ fetch(request).then((raspuns) => {
 ```
 
 Pentru mai multe detalii despre obiectul `FormData`, vezi acest API.
+
+## Citirea unui format binar
+
+Pentru ilustrarea modului în care putem trata obiectul răspuns ca un blob pentru a trata o imagine descărcată, de exemplu în vederea afișării. 
+
+```javascript
+let raspuns = await fetch('https://upload.wikimedia.org/wikipedia/commons/9/94/Laser-symbol.svg');
+console.log(response.headers.get('Content-Type'));
+// iterarea tuturor headerelor
+for (let [cheie, valoare] of response.headers) {
+    console.log(`${cheie}: ${valoare} `);
+}
+let blob = await raspuns.blob(); // descarcă ca obiect Blob
+// creează un element <img> în care să punem imaginea
+let img = document.createElement('img');
+img.style = 'position:fixed;top:10px;left:10px;width:620px';
+document.body.append(img);
+
+// afișare
+img.src = URL.createObjectURL(blob);
+
+setTimeout(() => { // ascunde imaginea după trei secunde
+  img.remove();
+  URL.revokeObjectURL(img.src);
+}, 3000);
+```
+
+## Trimiterea unei imagini
+
+Să presupunem că avem o imagine încărcată într-un element `canvas`. Aceasta poate fi trimisă către un endpoint al unui API folosind `fetch`.
+
+```javascript
+var canvas = document.querySelector('#imagine');
+async function trimite () {
+    let dateBlob = await new Promise((resolve, reject) => canvas.toBlob(resolve, 'img/png'));
+    let raspuns = await fetch('http://undeva.ro/primescimg', {
+        method: 'POST',
+        body: dateBlob
+        // headerul 'Content-Type' nu trebuie setat pentru că implicit toBlob() o face la 'img/png'
+    });
+    let rezultat = await raspuns.json();
+    console.log(rezultat.message);
+}
+```
+
+
 
 ## Referințe
 
