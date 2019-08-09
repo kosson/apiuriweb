@@ -8,7 +8,7 @@ Este o alternativă la accesarea claselor unui element sub formă de string în 
 const clase = elementNodeReference.classList;
 ```
 
-Ceea ce se obține este un array cu numele toturor claselor care au fost setate. Dacă elementul nu are nicio clasă, atunci dimensiunea array-ului returnat va fi `0`.
+Ceea ce se obține este un array cu numele tuturor claselor care au fost setate. Dacă elementul nu are nicio clasă, atunci dimensiunea array-ului returnat va fi `0`.
 
 ### Metode
 
