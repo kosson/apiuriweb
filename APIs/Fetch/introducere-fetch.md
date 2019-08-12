@@ -301,14 +301,51 @@ async function trimite () {
 }
 ```
 
+## Cuplaj cu promisiunile
+
+Promisiunile pot fi folosite în cuplaj cu API-ul `fetch`. Poți constitui un obiect promisiune pentru a rezolva un url.
+
+```javascript
+var button = document.querySelector('#start-button');
+var output = document.querySelector('#output');
+
+button.addEventListener('click', function() {
+  var promise = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      resolve('https://httpbin.org/put');
+    }, 3000);
+  }).then(function(url) {
+      return fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        mode: "cors",
+        body: JSON.stringify({person: {name: 'Jessie', age: 12}})
+      });
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      output.textContent = data.json.person.name;
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+});
+```
 
 
 ## Referințe
 
--   [Standardul fetch](https://fetch.spec.whatwg.org/),
--   [Fetch - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
--   [Working with the Fetch API](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
--   [Fetch API (100 Days of Google Dev)](https://www.youtube.com/watch?v=g6-ZwZmRncs)
+- [Standardul fetch](https://fetch.spec.whatwg.org/),
+- [Fetch - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- [Working with the Fetch API](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
+- [Fetch API (100 Days of Google Dev)](https://www.youtube.com/watch?v=g6-ZwZmRncs)
+- [Working with the Fetch API, Progressive Web Apps Training](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
+- [Using Fetch, Mozilla MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 
 ### Video
 
