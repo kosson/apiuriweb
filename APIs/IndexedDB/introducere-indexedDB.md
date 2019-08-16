@@ -106,3 +106,4 @@ Este un interval continuu peste niște tipuri de date folosite drept chei. Sunt 
 ## Referințe
 
 - [IndexedDB API, MDN](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+- [Indexed Database API 3.0, Editor’s Draft, 15 July 2019](https://w3c.github.io/IndexedDB/)

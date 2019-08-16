@@ -4,6 +4,8 @@ Acest element oferă o modalitate de a include taguri html care nu vor fi afișa
 
 Conținutul elementelor `<template>` vor fi parcurse de motorul browerului, dar nu vor fi afișate.
 
+`HTMLTemplateElement` are o proprietate `content` care este read-only, fiind un `DocumentFragment` ce conține fragmentul de arbore care trebuie inserat în DOM pe care template-ul îl reprezintă.
+
 ## Părinți admiși
 
 - `body`,
