@@ -1,6 +1,6 @@
 # IndexedDB
 
-Este un API din nivelul de bază care oferă posibilitatea de a stoca date structurate și chiar fișiere sau blob-uri.
+Este un API din nivelul de bază care oferă posibilitatea de a stoca date structurate și chiar fișiere sau blob-uri. Natura acestui mecanism de stocare este una asincronă ceea ce îl face pretabil lucrului cu web worker-ii.
 
 IndexedDB este o bază de date tranzacțională, dar spre deosebire de oricare alt RDBMS avem de-a face cu o bază de date care stochează datele folosind chei pe baza cărora se face indexarea.
 
@@ -10,6 +10,8 @@ IndexedDB folosește obiecte `requests` care ascultă reușita sau eșecul unor 
 
 
 ## Concepte de lucru
+
+De regulă, vei avea câte o bază de date per aplicație. O bază de date are mai multe obiecte care oferă stocarea. Sunt numite *object stores*. dar nu sunt tabele.
 
 ### Baza de date
 
@@ -103,7 +105,34 @@ Este un mecanism pentru iterarea a mai multor înregistrări cu un *key range*. 
 
 Este un interval continuu peste niște tipuri de date folosite drept chei. Sunt intervale de chei care pot fi extrase din *object stores* sau *indexes*.
 
+## Testarea suportului browserului
+
+Înainte de a porni la drum, mai întâi de toate trebuie testat browserul pentru a vedea nivelul de suport.
+
+```javascript
+// Este posibil ca suportul să fie oferit prin prefixare
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+// Nu se va face vreun identificator numit indexedDB. Se vor face referințe către obiecte window.IDB*
+window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"}; // e necesară doar dacă browserul este vechi și nu are suport pentru constante
+window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+// Mozilla nu are nevoie de window.mozIDB* pentru că nu a prefixat aceste obiecte.
+```
+
+## Deschiderea unei baze de date
+
+Pentru a porni la drum, este nevoie de a deschide baza de date.
+
+```javascript
+var request = window.indexedDB.open("BazaDeTest", 3);
+```
+
+Cererea deschiderii unei baze în urma aplicării metodei `open()` va returna un obiect `IDBOpenDBRequest` care conține valori pentru succes și pentru eroare. Marea majoritate a metodelor IndexedDB au același comportament.
+
+Rezultatul operațiunii `open()` este o instanță `IDBDatabase`.
+
 ## Referințe
 
 - [IndexedDB API, MDN](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
 - [Indexed Database API 3.0, Editor’s Draft, 15 July 2019](https://w3c.github.io/IndexedDB/)
+- [Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
+- [IndexedDB with usability, Github](https://github.com/jakearchibald/idb)

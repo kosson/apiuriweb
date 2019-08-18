@@ -77,3 +77,4 @@ self.addEventListener('fetch', function (event) {});
 - [Workbox](https://developers.google.com/web/tools/workbox/)
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
 - [The offline cookbook, ](https://jakearchibald.com/2014/offline-cookbook)
+- [Progressive web apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
