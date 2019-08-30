@@ -1,6 +1,6 @@
 # Metode storage
 
-## Storage​.key(număr)
+## `Storage​.key(număr)`
 
 Invocarea cu un număr, returnează numele cheii de la indexul menționat. Dacă indexul nu există, va fi returnată valoarea `null`.
 
@@ -10,7 +10,7 @@ for(var i =0; i < localStorage.length; i++){
 }
 ```
 
-## `Storage​.get​Item(numeCheie)`
+## `storage​.get​Item(numeCheie)`
 
 Va returna valoarea pentru numele cheii pasate sau `null` dacă aceasta nu există.
 
