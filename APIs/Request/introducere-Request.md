@@ -18,7 +18,8 @@ Al doilea parametru are ca valoare un obiect a cărui membri setează felul în 
 ### `method`
 
 Poate avea ca valoare verbele HTTP: `GET`, `POST`, `HEAD`, etc.
-Ține minte faptul că răspunsurile care vin pe `GET` sunt introduse în cache ca în cazul în care apare o cerere ulterioară pe aceeași cale, iar datele de pe server nu diferă față de cererea anterioară, se va servi varianta din cache.
+
+Ține minte faptul că răspunsurile care vin pe `GET` sunt introduse în cache.  În cazul în care apare o cerere ulterioară pe aceeași cale, iar datele de pe server nu diferă față de cererea anterioară, se va servi varianta din cache.
 
 ### `headers`
 
@@ -28,12 +29,12 @@ Toate headerele pe care dorești să le adaugi la cerere folosindu-te de contruc
 
 Constituie corpul cererii. Corpul poate fi oricare din următoarele obiecte:
 
-- Blob,
-- BufferSource,
-- FormData,
-- URLSearchParams,
-- USVString,
-- ReadableStream
+- `Blob`,
+- `BufferSource`,
+- `FormData`,
+- `URLSearchParams`,
+- `USVString`,
+- `ReadableStream`
 
 Atenție, cererile folosind metodele `GET` și `HEAD` nu trebuie să aibă corp.
 
