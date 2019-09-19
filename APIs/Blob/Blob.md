@@ -1,14 +1,33 @@
 # Blob
 
-Acesta este un constructor folosit pentru a constitui o secvență de bytes.
+Acesta este un constructor folosit pentru a constitui o secvență de bytes. Un `Blob` este un fragment de bytes care ține datele unui fișier. Un `Blob` nu este o referință către fișier. Un `Blob` are dimensiune și MIME exact precum fișierul are. Un `Blob` poate fi folosit ca un fișier.
+
+Conținutul unui `Blob` poate fi citit ca un `ArrayBuffer`, ceea ce indică `Blob`-ul ca un mecanism ideal pentru stocarea de date binare.
+
+**Spune standardul**:
+
+> Un obiect Blob se referă la o secvență de bytes care are un atribut ce indică dimensiunea, fiind numărul total de bytes din secvență și un atribut type, care este un string ASCII în lower case ce reprezintă tipul de media pe care secvența de bytes o reprezintă.
+
 
 ```javascript
-new Blob(blobParts, options);
+ var myBlob = new Blob(["Conținutul Blob-ului"], {type : "text/plain"});
 ```
 
 Primul argument al constructorului `blobParts` este un array de bytes, iar al doilea argument al opțiunilor menționează tipul resursei, de fapt un MIME-type (`image/png`).
 
 Argumentul `blobParts` poate fi de tip text sau chiar binar. Atunci când folosim date binare, `blobParts` poate fi un `TypedArray`. Pentru a scoate un `TypedArray` dintr-un `Blob`, se va folosi `FileReader`.
+
+Pentru a citi datele dintr-un `Blob`, se paote folosi clasa `FileReader`.
+
+```javascript
+var myReader = new FileReader();
+//handler executat o singură dată
+myReader.addEventListener("loadend", function(e){
+    document.getElementById("paragraph").innerHTML = e.srcElement.result;// afișează stringul
+});
+// pornește citirea
+myReader.readAsText(myBlob);
+```
 
 ## Lucrul cu resurse text
 
@@ -43,7 +62,7 @@ Legătura dintre link și blob va fi menținută, câtă vreme documentul este �
 
 Poți forța ștergerea legăturii prin folosirea lui `URL.revokeObjectURL(url)`. Este indicată eliberarea memoriei de îndată ce blobul a fost utilizat.
 
-## Transformarea blob-ului în base64
+### `Blob` în base64
 
 Dacă nu dorești să creezi o legătură, un link către blob, poți să-l transformi într-un string codat base64. Acest lucru permite constituirea de link-uri de date.
 
@@ -112,6 +131,72 @@ Acest avantaj pe care-l prezintă `Blob`-ul îl face preferabil atunci când ai 
 
 `XMLHttpRequest` și `fetch` lucrează cu `Blob`-urile în mod nativ.
 
+### Din `Blob` în `File`
+
+Un `Blob` aproape că este un fișier. Îi lipsesc câteva informații:
+
+- `lastModifiedDate` și
+- `name`.
+
+Pentru a-l transforma în `File`, vom introduce aceaste informații.
+
+```javascript
+function blobToFile(theBlob, fileName){
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+}
+```
+
+Și o variantă „modernă”:
+
+```javascript
+function blob2file(blobData) {
+  const fd = new FormData();
+  fd.set('a', blobData, 'filename');
+  return fd.get('a');
+}
+```
+
+În Edge și Safari
+
+```javascript
+var blob = new Blob(byteArrays, { type: contentType });
+blob.lastModifiedDate = new Date();
+blob.name = name;
+```
+
+### `Base64` în `File`
+
+Uneori ai nevoie să transformi un fișier codat Base64 într-un `File`.
+
+```javascript
+function base64ToFile(base64Data, tempfilename, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+        var begin = sliceIndex * sliceSize;
+        var end = Math.min(begin + sliceSize, bytesLength);
+
+        var bytes = new Array(end - begin);
+        for (var offset = begin, i = 0 ; offset < end; ++i, ++offset) {
+            bytes[i] = byteCharacters[offset].charCodeAt(0);
+        }
+        byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    var file = new File(byteArrays, tempfilename, { type: contentType });
+    return file;
+}
+```
+
 ## Resurse
 
 - [Blob, javascript.info](https://javascript.info/blob)
+- [How to convert Blob to File in JavaScript | Stackoverflow](https://stackoverflow.com/questions/27159179/how-to-convert-blob-to-file-in-javascript)
+- [Convert blob to file | Stackoverflow](https://stackoverflow.com/questions/27553617/convert-blob-to-file/27565109)

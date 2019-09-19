@@ -1,10 +1,10 @@
 # Fetch
 
-Pentru a înțelege și opera cu API-ul Fetch, trebuie să înțelegi ce este o promisiune în JavaScript, cum funcționează și care este structura sa. Înțelegerea promisiunilor va netezi calea către înțelegerea acestui instrument care uțurează lucrul cu resursele la distanță.
+Pentru a înțelege și opera cu API-ul `Fetch`, trebuie să înțelegi ce este o promisiune în JavaScript, cum funcționează și care este structura sa. Înțelegerea promisiunilor va netezi calea către înțelegerea acestui instrument care ușurează lucrul cu resursele la distanță.
 
-Scopul acestui API este acela de a unifica componentele folosite pentru a aduce resurse din rețea. Api-ul `fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
+Scopul acestui API este acela de a unifica componentele folosite pentru a aduce resurse din rețea. API-ul `fetch` este deja disponibil ca parte al API-ului browserului și nu necesită un pas suplimentar pentru a-l accesa.
 
-`fetch()` este o metodă a obiectului global sau a unui **worker** care returnează o promisiune.
+`fetch()` este o metodă a obiectului global sau a unui **worker**, care returnează o promisiune.
 
 ```javascript
 fetch('x'); // x fiind, de regulă calea către o resursă la distanță (URI)
@@ -95,14 +95,53 @@ Obiectul de răspuns din punctul de vedere al standardului poate fi de mai multe
 
 Obiectul de răspuns are și un corp (*body*). Acest *body* poate fi:
 
-- un stream (`null` sau `ReadableStream`), 
-- un `Blob`, 
-- un `BufferSource`, 
+- un stream (`null` sau `ReadableStream`),
+- un `Blob`,
+- un `BufferSource`,
 - un `FormData`,
 - un `URLSearchParams`,
-- un `USVString`. 
+- un `USVString`.
 
-Trebuie reținut un aspect foarte important: obiectul corp, care poate fi accesat cu `response.body` este un obiect `ReadableStream`, ceea ce permite citirea datelor pe fragmentele bine-cunoscute ca `chunks`. 
+### Corpul unui răspuns - `response.body`
+
+Trebuie reținut un aspect foarte important: obiectul corp, care poate fi accesat cu `response.body` este un obiect `ReadableStream`, ceea ce permite citirea datelor pe fragmentele bine-cunoscute ca `chunks`.
+
+```javascript
+const image = document.getElementById('target');
+
+// Fetch the original image
+fetch('./tortoise.png')
+// Retrieve its body as ReadableStream
+.then(response => response.body)
+.then(body => {
+  const reader = body.getReader();
+
+  return new ReadableStream({
+    start(controller) {
+      return pump();
+
+      function pump() {
+        return reader.read().then(({ done, value }) => {
+          // When no more data needs to be consumed, close the stream
+          if (done) {
+            controller.close();
+            return;
+          }
+
+          // Enqueue the next data chunk into our target stream
+          controller.enqueue(value);
+          return pump();
+        });
+      }
+    }
+  })
+})
+.then(stream => new Response(stream))
+.then(response => response.blob())
+.then(blob => URL.createObjectURL(blob))
+.then(url => console.log(image.src = url))
+.catch(err => console.error(err));
+```
 
 Pentru a exploata datele obiectului răspuns, API-ul pune la dispoziție câteva metode utile în aces sens:
 
@@ -110,7 +149,7 @@ Pentru a exploata datele obiectului răspuns, API-ul pune la dispoziție câteva
 - `response.text()`, care parsează corpul răspunsului ca pe un text
 - `response.formData()`, care returnează un răspuns de tipul `FormData` care are o codare `form/multipart`
 - `response.blob()`, returnează răspunsul ca `Blob` (date binare de un anumit tip)
-- `response.arrayBuffer()`, care returnează răspunsul ca `ArrayBuffer` (date binare) 
+- `response.arrayBuffer()`, care returnează răspunsul ca `ArrayBuffer` (date binare)
 
 Dacă presupunem că accesăm date de la un API extern, iar formatul este *json*, putem decide felul în care vom consuma datele, fie folosind sintaxa `await`, fie folosind promisiunile.
 
@@ -137,7 +176,7 @@ let dateExterne = fetch(UrlProtejat, {
     headers: {
         Authentication: 'unToken'
     }
-}); 
+});
 ```
 
 Există un set de headere care nu pot fi setate:
@@ -199,9 +238,9 @@ Observă faptul că primul `then(raspuns)` are rolul de a constitui o reprezenta
 
 ### Metoda `POST` - trimitere date
 
-API-ul `Fetch` poate fi utilizat și pentru a trimite date. Pentru a trimite date ai nevoie să setezi metoda `POST`. Apoi va trebui să construim un corp. Pentru acest lucru va trebui să construim un obiect `Request`. Corpul poate fi: 
+API-ul `Fetch` poate fi utilizat și pentru a trimite date. Pentru a trimite date ai nevoie să setezi metoda `POST`. Apoi va trebui să construim un corp. Pentru acest lucru va trebui să construim un obiect `Request`. Corpul poate fi:
 
-- un șir de caractere așa cum este un JSON, 
+- un șir de caractere așa cum este un JSON,
 - poate fi un obiect `FormData` pentru a trimite date care sunt `form/multipart`,
 - poate fi constituit din date binare, fie acestea `Blob`, fie `BufferSource`,
 - `URLSearchParams` pentru a putea trimite datele ca `x-www-form-urlencoded`.
@@ -259,7 +298,7 @@ Pentru mai multe detalii despre obiectul `FormData`, vezi acest API.
 
 ## Citirea unui format binar
 
-Pentru ilustrarea modului în care putem trata obiectul răspuns ca un blob pentru a trata o imagine descărcată, de exemplu în vederea afișării. 
+Pentru ilustrarea modului în care putem trata obiectul răspuns ca un blob pentru a trata o imagine descărcată, de exemplu în vederea afișării.
 
 ```javascript
 let raspuns = await fetch('https://upload.wikimedia.org/wikipedia/commons/9/94/Laser-symbol.svg');
@@ -337,15 +376,42 @@ button.addEventListener('click', function() {
 });
 ```
 
+## Obținerea dimensiunii unui fișier
+
+Un exemplu interesant este cel propus de Jake Achibald în articolul introductiv „[ Async functions - making promises friendly](https://developers.google.com/web/fundamentals/primers/async-functions)”.
+
+```javascript
+var url = 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Nerva_Tivoli_Massimo.jpg';
+function getResponseSize(url) {
+    return fetch(url).then(response => {
+        const reader = response.body.getReader();
+        let total = 0;
+
+        return reader.read().then(function processResult(result) {
+            if (result.done) return total;
+
+            const value = result.value;
+            total += value.length;
+            console.log('Received chunk', value);
+
+            return reader.read().then(processResult);
+        })
+    });
+}
+getResponseSize(url).then(console.log);
+```
 
 ## Referințe
 
 - [Standardul fetch](https://fetch.spec.whatwg.org/),
 - [Fetch - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- [Body.body | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Body/body)
 - [Working with the Fetch API](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
 - [Fetch API (100 Days of Google Dev)](https://www.youtube.com/watch?v=g6-ZwZmRncs)
 - [Working with the Fetch API, Progressive Web Apps Training](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
 - [Using Fetch, Mozilla MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [Working with the Fetch API, Progressive Web Apps Training | Google Developer](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api)
+- [Making API Requests With node-fetch | hackersandslackers.com](https://hackersandslackers.com/making-api-requests-with-nodejs/)
 
 ### Video
 
