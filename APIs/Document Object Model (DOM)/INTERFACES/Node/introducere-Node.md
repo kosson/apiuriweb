@@ -1,10 +1,12 @@
-# Interfața Node - fundamentală
+# Interfața `Node` - fundamentală
 
 Nodurile sunt unitățile care constituie părțile constructive ale DOM-ului. Aceste noduri sunt dispuse într-un arbore numit în engleză *node tree*.
 
 Interfața `Node` este considerată a fi o **interfață fundamentală**. În DOM, `Node`-ul este unitatea de bază pentru a accesa datele. Este un reper fix.
 
 `Node` este o interfață de la care moștenesc o serie de tipuri DOM printre care `Document`, `Element`, `CharacterData` (de la care moștenesc la rândul lor `Text`, `Comment` și `CDATASection`), `ProcessingInstruction`, `DocumentFragment`, `DocumentType`, `Notation`, `Entity`, `EntityReference`.
+
+![](img/Node-Interface-And-Inheriters.png)
 
 Standardul spune că această interfață este „tipul de dată primar pentru întreg DOM-ul”. Atenție, nu toate nodurile pot avea copii.
 
@@ -16,6 +18,8 @@ Fiecare `node` are două proprietăți care îl descriu: `nodeType` și `nodeNam
 graph RL;
   Node((Node)) -->|moștenește din| EventTarget;
 ```
+
+![](img/EventTarget-Node.png)
 
 ## Tipuri de noduri
 

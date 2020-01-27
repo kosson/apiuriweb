@@ -65,3 +65,4 @@ books.forEach(book => {
 ## Referințe
 
 - [An Introduction to Web Components | css-tricks.com](https://css-tricks.com/an-introduction-to-web-components/)
+- [Web Components | MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components)

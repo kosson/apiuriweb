@@ -1,6 +1,6 @@
 # Elementul template
 
-Acest element oferă o modalitate de a include taguri html care nu vor fi afișate imediat la momentul în care pagina s-a încărcat. Aceste fragmente de html vor putea fi inserate în DOM la un moment dat ca răspuns al unui eveniment.
+Acest element oferă o modalitate de a include taguri HTML care nu vor fi afișate imediat la momentul în care pagina s-a încărcat. Aceste fragmente de HTML vor putea fi inserate în DOM la un moment dat ca răspuns al unui eveniment.
 
 Conținutul elementelor `<template>` vor fi parcurse de motorul browerului, dar nu vor fi afișate.
 
