@@ -27,13 +27,17 @@ Nodurile pot fi noduri de elemente (de ex. elementul `<p>`), noduri de text, car
 
 ## Mantre
 
--   Dintre toate proprietățile doar două pot fi și scrise, nu numai să fie citite. Restul pot fi doar citite. Acestea sunt: `Node.nodeValue` și `Node.textContent`.
+- Dintre toate proprietățile doar două pot fi și scrise, nu numai să fie citite. Restul pot fi doar citite. Acestea sunt: `Node.nodeValue` și `Node.textContent`.
 
-## Proprietățile Node
+## Proprietățile lui `Node`
 
 ### `Node.baseURI`
 
+Este o proprietate care returnează o valoare de tip `DOMString`, reprezintând URL-ul de bază al documentului în care se află nodul.
+
 ### `Node.childNodes`
+
+Proprietatea returnează un `NodeList` live cu toate nodurile copil. Fii atent că în cazul modificării unui nod, obiectul `NodeList` va fi actualizat dinamic.
 
 ### `Node.firstChild`
 
@@ -106,7 +110,7 @@ if (element.parentNode.classList.contains('suntgalben')) {
 }
 ```
 
-Proprietatea `parentNode` este chainable, adică permite mișcarea pe DOM în sus și în jos.
+Proprietatea `parentNode` este *chainable*, adică permite mișcarea pe DOM în sus și în jos.
 
 ```javascript
 console.log(elementReferință.parentNode.parentNode.nodeName);
