@@ -1,6 +1,6 @@
 # HTMLElement
 
-Această interfață este oferită spre exploatare de fiecare element HTML. Unele elemente implementează direct această interfață, iar altele o implementează prin intermediul unei interfețe care moștenește de la aceasta.
+Această interfață reprezintă un element HTML. Unele elemente implementează direct această interfață, iar altele o implementează prin intermediul unei interfețe care moștenește de la aceasta.
 
 Interfața `HTMLElement` moștenește de la părintele său care este `Element`, care moștenește din `Node`, care moștenește din `EventTarget`.
 Interfața `HTMLElement` mai implementează și proprietățile de la `GlobalEventHandlers` și `TouchEventHandlers`.
