@@ -1,5 +1,7 @@
 # Blob
 
+Un obiect `Blob` este o reprezentare a unui `blob`, care în sine este un obiect de date ce nu pot fi modificate. Aceste date pot fi citite drept text sau date binare. Aceste date pot fi convertite într-un `ReadableStream` pentru ca metodele sale să poată fi folosite pentru a-l procesa.
+
 Acesta este un constructor folosit pentru a constitui o secvență de bytes. Un `Blob` este un fragment de bytes care ține datele unui fișier. Un `Blob` nu este o referință către fișier. Un `Blob` are dimensiune și MIME exact precum fișierul are. Un `Blob` poate fi folosit ca un fișier.
 
 Conținutul unui `Blob` poate fi citit ca un `ArrayBuffer`, ceea ce indică `Blob`-ul ca un mecanism ideal pentru stocarea de date binare.
@@ -17,7 +19,7 @@ Primul argument al constructorului `blobParts` este un array de bytes, iar al do
 
 Argumentul `blobParts` poate fi de tip text sau chiar binar. Atunci când folosim date binare, `blobParts` poate fi un `TypedArray`. Pentru a scoate un `TypedArray` dintr-un `Blob`, se va folosi `FileReader`.
 
-Pentru a citi datele dintr-un `Blob`, se paote folosi clasa `FileReader`.
+Pentru a citi datele dintr-un `Blob`, se poate folosi clasa `FileReader`.
 
 ```javascript
 var myReader = new FileReader();

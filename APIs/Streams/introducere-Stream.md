@@ -2,7 +2,7 @@
 
 Permite accesarea stream-urilor folosind JavaScript pentru a putea folosi datele primite din rețea.
 
-Stream-rile folosesc un set de interfețe care se încadrează în două categorii `Readable` și `Writable`.
+Stream-urile folosesc un set de interfețe care se încadrează în două categorii `Readable` și `Writable`.
 
 ## Interfețe `Readable`
 
@@ -18,4 +18,5 @@ Reprezintă un reader disponibil din oficiu, care poate fi utilizat pentru a cit
 
 ## Referințe
 
+- [Streams Living Standard](https://streams.spec.whatwg.org)
 - [Stream, MDN](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
