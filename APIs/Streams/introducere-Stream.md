@@ -20,3 +20,4 @@ Reprezintă un reader disponibil din oficiu, care poate fi utilizat pentru a cit
 
 - [Streams Living Standard](https://streams.spec.whatwg.org)
 - [Stream, MDN](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+- [The Streams API](https://flaviocopes.com/stream-api/)
