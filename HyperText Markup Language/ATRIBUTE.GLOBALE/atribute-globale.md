@@ -20,6 +20,8 @@ Acestea ar fi: `onabort`, `onautocomplete`, `onautocompleteerror`, `onblur`, `on
 
 ### `contenteditable`
 
+Atributul global [contenteditable](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/contenteditable) indică dacă un element este editabil de către utilizator. Pentru a indica faptul că este editabil, valoarea atributului trebuie să fie `true` sau un gring gol (`""`). Valoarea `false` indică faptul că elementul nu este editabil.
+
 ### `contextmenu`
 
 ### `data-*`

@@ -108,7 +108,11 @@ Această interfață este clasa de bază din care toate obiectele ce reprezintă
 
 ### `Element.scrollTo()`
 
-### `Element.setAttribute()`
+### `Element.setAttribute(name, value)`
+
+Metoda setează valoarea unui atribut al elementului specificat. Dacă atributul deja există, va fi actualizat. Pentur a obține valoarea unui atribut, se va folosi metoda `getAttribute()`, iar pentru a elimina un atribut se va folosi `removeAttribute()`.
+
+Metoda returnează `undefined`.
 
 ### `Element.setAttributeNS()`
 
