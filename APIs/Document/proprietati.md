@@ -1,6 +1,6 @@
 # Proprietăți ale interfeței `Document`
 
-Pe lângă proprietățile proprii, moștenește și pe cele ale lui `Node` și `EventTarget` prin moștenirea de la acestea.
+Pe lângă proprietățile proprii, moștenește și pe cele ale lui `Node` și `EventTarget`.
 
 Această interfață moștenește și proprietățile interfeței `HTMLDocument`.
 

@@ -27,6 +27,85 @@ Returnează rădăcina obiectului context, care, opțional, poate să includă �
 
 Returnează un `Boolean` care indică dacă elementul are noduri copil.
 
+O posibilă aplicație oferită de MDN este parcurgerea recursivă a copiilor unui nod. Această aplicație utilă implică metoda, dar și proprietatea `Node.childNodes`.
+
+```javascript
+function eachNode(rootNode, callback) {
+  // cazul în care nu ai un callback
+	if (!callback) {
+		const nodes = [];
+    // pentru fiecare nod, callbackul va completa
+		eachNode(rootNode, function (node) {
+			nodes.push(node); // adaugă în colecția de noduri
+		})
+		return nodes; // returnează colecția dacă nu ai callback
+	}
+
+  // dacă nu pasezi funcție, `callback` va fi undefined
+	if (false === callback(rootNode)) {
+		return false; // returnează `false` doar când callback-ul returnează false
+  }
+
+  // în cazul în care nodul pasat drept prim argument are copii
+	if (rootNode.hasChildNodes()) {
+		const nodes = rootNode.childNodes; // constituie lista dinamică
+    // parcurge lista recursiv pentru fiecare element
+		for (let i = 0, l = nodes.length; i < l; ++i) {
+			if (false === eachNode(nodes[i], callback)) {
+        // dacă evaluarea callback-ului returnează valoarea false,
+        // se iese din ciclare prin return și se reia ciclarea la nivelul părinte
+        // poate fi utilizat pentru momentul în care un anumit string este identificat, ș.a.m.d.
+				return;
+      }
+    }
+	}
+}
+```
+
+Tot MDN oferă un exemplu de funcție wrapper care folosește funcționalitatea dezvoltată prin exemplul anterior (`eachNode`), pentru a căuta un fragment de text într-un document.
+
+```javascript
+function grep(parentNode, pattern) {
+	const matches = [];
+	let endScan = false;
+
+	eachNode(parentNode, function (node) {
+    // în cazul în care am terminat pe acest nivel, continuă mai sus cu părinții
+		if (endScan) {
+			return false;
+    }
+
+		// Ignoră nodurile care nu sunt noduri text
+		if (node.nodeType !== Node.TEXT_NODE) {
+			return;
+    }
+
+    // cazul în care pasezi direct un string
+		if (typeof pattern === "string") {
+			if (-1 !== node.textContent.indexOf(pattern)) {
+				matches.push(node);
+      }
+    // cazul în care pasezi un pattern
+		} else if (pattern.test(node.textContent)) {
+      // în cazul în care pattern-ul nu are atributul global setat
+			if (!pattern.global) {
+				endScan = true; // ieși după această iterație.
+				matches = node; // cu singurul rezultat găsit
+			} else {
+        matches.push(node);
+      }
+		}
+	})
+
+	return matches;
+}
+
+const typos = ["teh", "adn", "btu", "adress", "youre", "msitakes"];
+const pattern = new RegExp("\\b(" + typos.join("|") + ")\\b", "gi");
+const mistakes = grep(document.body, pattern);
+console.log(mistakes);
+```
+
 ## Node.insertBefore()
 
 Inserează un `Node` înaintea nodului pe care se aplică metoda. Nodul inserat va fi copil al celui părinte.
