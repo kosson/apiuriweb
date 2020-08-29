@@ -142,7 +142,7 @@ Elimină un nod copil dintre cei ai elementului curent.
 // eliminarea tuturor copiilor unui nod
 function removeAllChildren(element) {
   while (element.firstChild) {
-    element.removeChild(element.firstChild)
+    element.removeChild(element.firstChild);
   }
 }
 removeAllChildren(document.body); // ca alternativă la `document.body.innerHTML`
