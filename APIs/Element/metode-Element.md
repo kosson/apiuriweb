@@ -81,7 +81,7 @@ Inserează un nod text într-o poziție relativă față de elementul pentru car
 
 ## `Element.querySelector()`
 
-Returnează primul `Node` care se potrivește cu selectorul specificat ca string în parametru.
+Returnează primul `Node` care se potrivește cu selectorul specificat ca string în parametru. Acest element trebuie să fie descendent al elementului pe al cărui obiect se invocă.
 
 ## `Element.querySelectorAll()`
 

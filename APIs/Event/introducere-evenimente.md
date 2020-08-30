@@ -16,7 +16,7 @@ La momentul în care un eveniment se declanșează, apelarea callback-ul are dre
 ## Anatomie
 
 Fiecare eveniment DOM, de fapt, este un obiect care se bazează pe interfața `Event`. Toate evenimentele implementează metodele interfeței `EventTarget`. Fiecare dintre evenimentele DOM are proprietăți și metode caracteristice care se adaugă celor puse la dispoziție de interfața `Event`.
-Pentru a răspunde unui eveniment, browserul, mai întâi trebuie să *captureze* evenimentul iar această etapă se numește *înregistrarea evenimentului* - `event registration`. Mecanismul prin care se face acest lucru este acela al setării de către programator a unor funcții de răspuns la acel eveniment. Aceste funcții de răspuns se numesc în limba engleză `event handlers`. Atunci când se creează evenimentul, de fapt este generat un obiect eveniment, care este asociat mai apoi de browser cu funcția de răspuns. Funcția de răspuns este mai apoi trimisă în coada de așteptare. Când stiva de execuție (call stack) este liberă, se trimite spre execuție funcția răspuns.
+Pentru a răspunde unui eveniment, browserul, mai întâi trebuie să *captureze* evenimentul, iar această etapă se numește *înregistrarea evenimentului* - `event registration`. Mecanismul prin care se face acest lucru este acela al setării de către programator a unor funcții de răspuns la acel eveniment. Aceste funcții de răspuns se numesc în limba engleză `event handlers`. Atunci când se creează evenimentul, de fapt este generat un obiect eveniment, care este asociat mai apoi de browser cu funcția de răspuns. Funcția de răspuns este mai apoi trimisă în coada de așteptare. Când stiva de execuție (call stack) este liberă, se trimite spre execuție funcția răspuns.
 
 Cel mai simplu event handler este cel pe care-l oferă un atribut pus direct în codul HTML.
 
@@ -94,7 +94,7 @@ Cele trei faze ale „călătoriei” unui obiect eveniment.
 
 ### Faza de captură - capturing phase
 
-Este faza în care obiectul eveniment „călătorește” până la părintele direct al țintei pornind de cel mai de sus, de la `Window`.
+Este faza în care obiectul eveniment „călătorește” până la părintele direct al țintei pornind de cel mai de sus, de la `window`.
 
 ### Faza localizată pe țintă - target phase
 
@@ -102,7 +102,7 @@ Este faza în care obiectul eveniment „călătorește” până la părintele 
 
 ### Faza de bubbling
 
-După executarea funcției callback pentru evenimentul specificat de țintă, propagarea face cale întoarsă către `Window`.
+După executarea funcției callback pentru evenimentul specificat de țintă, propagarea face cale întoarsă către `window`.
 
 Un element părinte va permite capturarea tuturor evenimentelor apărute la elementele copil. Să ne uităm nițel cam cum ar apărea.
 

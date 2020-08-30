@@ -16,7 +16,7 @@ Conținutul elementelor `<template>` vor fi parcurse de motorul browerului, dar 
 
 ## DOM
 
-Interfața DOM răspunzătoare pentru acest element este `HTMLTemplate​Element`.
+Interfața DOM răspunzătoare pentru acest element este `HTMLTemplate​Element`, care are o proprietate `content`. Această proprietate este un `DocumentFragment` care conține un arbore DOM care este reprezentarea template-ului.
 
 Fragmentele pot fi clonate și inserate în document folosindu-se JavaScript.
 
@@ -60,7 +60,22 @@ for (let ub of date) {
 }
 ```
 
+## Atașarea de evenimente pe templateuri
+
+Evenimentele pentru care atașezi receptori (funcții cu rol de callback) pe întregul template clonat, nu va funcționa pentru că vei lucra cu o instanță `DocumentFragment`. Pentru a avea posibilitatea de a crea elemente pe care să poți atașa evenimente, fă referință la elemente din interiorul template-ului: `template.content.firstElementChild.cloneNode(true)`.
+
+Un alt scenariu care permite ar fi să faci o referință la conținutul clonat al template-ului și odată având la îndemână această instanță, să țintești elemente din interior folosind selectoarele cunoscute precum `querySelector` sau `querySelectorAll`.
+
+```javascript
+var clonaTemplate = template.content.cloneNode(true);
+var taguri = clonaTemplate.querySelector(`.taguri`);
+for (var idx = 0; idx < taguri.length; idx += 1) {
+  taguri[idx].addEventListener('click', nume_functie_callback);
+}
+```
+
 ## Resurse
 
 -   [W3 HTML5 - A vocabulary and associated APIs for HTML and XHTML](https://www.w3.org/TR/html5/)
 -   [HTML. Living Standard. 9 aprilie, 2018](https://html.spec.whatwg.org/multipage/scripting.html#the-template-element)
+-   [Using templates and slots | MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots)

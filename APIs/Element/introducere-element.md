@@ -16,7 +16,7 @@ Elementele au asociate:
 - un nume local
 
 Chiar dacă namespace-ul și prefixul pot să nu fie specificate, fiind în acest caz `null`, numele trebuie dat.
-Elementele și câte o listă de atribute care sunt ordonate. Dacă nu sunt întroduse atribute, lista acestora va fi goală.
+Elementele au și câte o listă de atribute care sunt ordonate. Dacă nu sunt întroduse atribute, lista acestora va fi goală.
 
 ## Proprietăți
 

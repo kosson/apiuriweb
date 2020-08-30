@@ -22,4 +22,4 @@ Ceea ce este ușor de observat este că sunt trei faze prin care trebuie să tre
 -   adăugăm evenimentul și o funcție receptor la un element țintă
 -   facem un dispatch pentru a declanșa aceste eveniment.
 
-La obiectul eveniment care se crează, ne este oferită posibilitatea să adăugăm date suplimentare prin constituirea unei proprietăți numită `detail` și care este un obiect care va avea valorile suplimentare dorite.
+La obiectul eveniment care se creează, ne este oferită posibilitatea să adăugăm date suplimentare prin constituirea unei proprietăți numită `detail`. Aceasta este un obiect, care va avea valorile suplimentare dorite.
