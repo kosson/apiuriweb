@@ -24,6 +24,8 @@ Elementele au și câte o listă de atribute care sunt ordonate. Dacă nu sunt �
 
 ### `Element.classList`
 
+Aceasta este o proprietate read-only, care returnează o listă `DOMTokenList` live ce reprezintă clasele unui element.
+
 ### `Element.className`
 
 ### `Element.clientHeight`

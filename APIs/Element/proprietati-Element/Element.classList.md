@@ -1,6 +1,6 @@
 ## Element.classList
 
-Returnează un `DOMTokenList` care conține o listă de atribute clasă.
+Returnează un obiect `DOMTokenList` live care conține o listă de atribute clasă.
 
 Este o alternativă la accesarea claselor unui element sub formă de string în care numele claselor sunt delimitate prin spații, obținut prin `element.className`.
 
