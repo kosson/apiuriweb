@@ -28,7 +28,7 @@ Returnează numele clasei de la indexul specificat.
 
 Atunci când metoda primește un singur argument, va seta clasa elementului la această valoare și va returna `true`. Dacă numele clasei deja există, va fi eliminată din listă și va returna `false`.
 
-Dacă există și cel de-al doilea argument, iar acesta poate fi evaluat la `true`, atunci numele respectivei clase va fi adăugat. Dacă valorea celui de-al doilea arument este evaluată la `false`, numele clasei va fi eliminat.
+Dacă există și cel de-al doilea argument, iar acesta poate fi evaluat la `true`, atunci numele respectivei clase va fi adăugat. Dacă valorea celui de-al doilea argument este evaluată la `false`, numele clasei va fi eliminat.
 
 #### `contains(String)`
 

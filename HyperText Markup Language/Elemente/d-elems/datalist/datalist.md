@@ -1,17 +1,15 @@
 # `<datalist>`
 
-Este un element care precizează valorile posibile pentru alte elemente de control.
+Este un element care precizează valorile posibile pentru elemente de control. Aceste valori sunt oferite ca sugestie.
 
 ```html
-<label for="ice-cream-choice">Choose a flavor:</label>
+<label for="ice-cream-choice">Alege unul dintre sortimente:</label>
 <input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" />
 
 <datalist id="ice-cream-flavors">
-    <option value="Chocolate">
-    <option value="Coconut">
-    <option value="Mint">
-    <option value="Strawberry">
-    <option value="Vanilla">
+    <option value="Ciocolată">
+    <option value="Vanilie">
+    <option value="Mentă">
 </datalist>
 ```
 
