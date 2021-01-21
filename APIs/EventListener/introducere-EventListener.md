@@ -1,6 +1,6 @@
 # Introducere EventListener
 
-Aceasta interfață este un obiect care gestionează un eveniment declanșat de un obiect `EventTarget`. Din motive de menținere a compatibilității, `EventListener` este un obiect care are o metodă `handleEvent()`, dar poate fi și o funcție.
+Aceasta interfață este un obiect care gestionează un eveniment declanșat de un obiect `EventTarget`. Din motive de menținere a compatibilității, `EventListener` este un obiect care menține o metodă `handleEvent()`, dar poate fi și o funcție.
 
 ```html
 <button id="btn">Apasă!</button>
@@ -16,7 +16,7 @@ buttonElement.addEventListener('click', function (event) {
   alert('Element clicked through function!');
 });
 
-/* Din rațiuni de compatibilitate, folosirea unui oobiect, trebuie să
+/* Din rațiuni de compatibilitate, folosirea unui obiect, trebuie să
 includă o metodă handleEvent */
 buttonElement.addEventListener('click', {
   handleEvent: function (event) {
@@ -50,15 +50,13 @@ Standardul aduce o notă importantă la care trebuie reflectat. Spune că deși,
 
 ## Adăugarea unui eveniment
 
-Un receptor de evenimente (event listener) poate fi adăugat unei ținte (un obiect DOM).
-
-Pentru a adăuga un receptor unei ținte, se va folosi metoda `ținta.addEventListener(type, callback[, opțiuni])`, care este disponibilă tuturor nodurilor DOM.
+Un receptor de evenimente (event listener) poate fi adăugat unei ținte (un obiect DOM). Pentru a adăuga un receptor unei ținte, se va folosi metoda `ținta.addEventListener(type, callback[, opțiuni])`, care este disponibilă tuturor nodurilor DOM.
 
 Ceea ce face această metodă este că atașează un receptor pentru un anumit tip de eveniment specificat cu un șir de caractere ca prim argument. Cel de-al doilea argument primit este callback-ul, o funcție ce va fi apelată atunci când evenimentul este receptat de țintă. Opțiunile introduse opțional după cel de-al doilea argument sunt specifice pentru tipul respectiv de eveniment.
 
 Opusă setării de receptori, există și metoda prin care sunt eliminați: `ținta.removeEventListener(type, callback [, opțiuni])`. Eliminarea receptorilor după ce aceștia și-au încheiat ciclul de viață, este un lucru absolut necesar pentru a elimina din memorie referințele către obiectul context și astfel colectarea la gunoi a acestora.
 
-Mai există o metodă prin care poate fi `emis` (dispatch) în mod artificial un eveniment: `ținta.dispatchEvent(event)`. Emiterea evenimentului către țintă returnează un boolean care este `true`, dacă atributul `cancelable` al evenimentului este `false` sau dacă metoda `preventDefault()` nu a fost invocată. False vice-versa.
+Mai există o metodă prin care poate fi `emis` (dispatch) în mod artificial un eveniment: `ținta.dispatchEvent(event)`. Emiterea evenimentului către țintă returnează un boolean `true`, dacă atributul `cancelable` al evenimentului este `false` sau dacă metoda `preventDefault()` nu a fost invocată. False vice-versa.
 
 ## Mecanismul de trimitere (dispatch) al evenimentelor
 
@@ -70,7 +68,7 @@ Evenimentul se va propaga prin arborele DOM respectând modul în care se face p
 -   **localizarea pe țintă** (*target phase*) și cea de
 -   **bubbling** (*bubble phase*).
 
-Pe măsură ce fiecare element, care are receptori pentru eveniment, este „atins” de acesta, rând pe rând devine `currentTarget` (ținta curentă). Ultimul atins din această cale este chiar ținta evenimentului (*event target*).
+Pe măsură ce fiecare element, care are receptori pentru eveniment, este *atins* de acesta, rând pe rând devine `currentTarget` (ținta curentă). Ultimul atins din această cale este chiar ținta evenimentului (*event target*).
 
 ## Oprirea propagării unui eveniment.
 

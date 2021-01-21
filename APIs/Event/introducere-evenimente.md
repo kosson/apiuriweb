@@ -94,15 +94,16 @@ Cele trei faze ale „călătoriei” unui obiect eveniment.
 
 ### Faza de captură - capturing phase
 
-Este faza în care obiectul eveniment „călătorește” până la părintele direct al țintei pornind de cel mai de sus, de la `window`.
+Este faza în care obiectul eveniment „călătorește” până la părintele direct al țintei, pornind de cel mai de sus, adică de la `window`.
 
 ### Faza localizată pe țintă - target phase
 
-În această fază, dacă tipul evenimentului are la opțiuni specificat că nu va face bubbling, propagarea se oprește aici.
+Atunci când evenimentul ajunge la elementul care este țintit, spunem că ne aflăm în faza `AT_TARGET` notată cu 2.
+În această fază, dacă tipul evenimentului are la opțiuni specificat că nu îi este permis bubbling-ul, propagarea se oprește aici.
 
 ### Faza de bubbling
 
-După executarea funcției callback pentru evenimentul specificat de țintă, propagarea face cale întoarsă către `window`.
+După executarea funcției callback pentru evenimentul specificat de țintă, evenimentul face cale întoarsă către rădăcina tuturor elementelor: `window`.
 
 Un element părinte va permite capturarea tuturor evenimentelor apărute la elementele copil. Să ne uităm nițel cam cum ar apărea.
 
@@ -147,15 +148,15 @@ Aici intervin cele două modele pentru a înțelege. A existat un moment când N
 
 ### MODELUL CURENT
 
-Pentru armonizare, W3C a fost de acord ca cele două modele să coexiste după următorul scenariu: orice eveniment se declanșează, mai întâi de orice este capturat și este declanșat în toți copiii (dacă aceștia au event handlere - receptori cu true), până când ajunge la cel vizat (`target element`), după care face „bubbling”, adică se ridică din nou către gazdă declanșând toate *event handlere*-le.
+Pentru armonizare, W3C a fost de acord ca cele două modele să coexiste după următorul scenariu: orice eveniment se declanșează, mai întâi de orice este capturat și este declanșat în toți copiii (dacă aceștia au event handlere - receptori cu true), până când ajunge la cel vizat (`target element`), după care face „bubbling”, adică se ridică din nou către gazdă declanșând toate *event handlere*-le pentru care tipul de eveniment are atașat un handler.
 
 ![](EventModelW3CModel.png)
 
-Partea bună este că te poți decide singur când vei „înregistra” evenimentul, fie în faza de capturare, fie în faza de bubbling folosind metoda `addEventListener`. Dacă cel de-al treilea argument este setat la `true`, atunci evenimentul va fi „înregistrat” la faza de capturare, iar inversul indică faza de bubbling.
+Partea bună este că te poți decide singur când vei „înregistra” evenimentul, fie în faza de capturare, fie în faza de bubbling folosind metoda `addEventListener`. Dacă cel de-al treilea argument este setat la `true`, atunci evenimentul va fi „înregistrat” la faza de *capturing*, iar inversul indică faza de *bubbling*.
 
 ## Oprește comportamentul implicit
 
-Am menționat deja faptul că obiectul eveniment pune la dispoziție o metodă `preventDefault()`, cu ajutorul căreia putem împiedica comportamentul obișnuit al unei acțiuni. De exemplu, comportamentul obișnuit al unui link este să deschidă pagina pentru adresa specificată la `href`.
+Am menționat deja faptul că obiectul eveniment pune la dispoziție o metodă `preventDefault()` cu ajutorul căreia putem împiedica comportamentul obișnuit al unei acțiuni. De exemplu, comportamentul obișnuit al unui link este să deschidă pagina pentru adresa specificată la `href`.
 
 ```javascript
 let selecțieLink = document.querySelector('#unLink');

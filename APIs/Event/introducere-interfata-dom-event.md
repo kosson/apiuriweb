@@ -36,6 +36,8 @@ tinta.addEventListener('click', function (eveniment) {
 
 ![](ObiectulEventTargetReprezentare.png)
 
+În funcția cu rol de callback este pasat obiectul eveniment denumit în exemplu `eveniment`. Acest obiect expune câteva proprietăți și metode importante.
+
 ### eveniment.type
 
 La momentul creării evenimentului, atributul trebuie inițializat cu un șir vid. Type returnează valoarea cu care a fost inițializat evenimentul.
@@ -46,7 +48,7 @@ Returnează obiectul pentru care s-a atașat evenimentul. Când este creat eveni
 
 ### eveniment.currentTarget
 
-Avem un event listener (un receptor). Acest event listener are o funcție cu rol de callback. Atunci când este invocată funcția callback, `currentTarget` returnează obiectul în contextul căreia callbackul rulează la momentul apelării. Este posibil ca ținta să se fi schimbat între timp. Când este creat evenimentul, se va inițializa la `null`.
+Avem un event listener (un receptor). Acest event listener are o funcție cu rol de callback. Atunci când este invocată funcția callback, `currentTarget` returnează obiectul în contextul căreia rulează callback-ul la momentul apelării. Este posibil ca ținta să se fi schimbat între timp. Când este creat evenimentul, se va inițializa la `null`.
 
 ### eveniment.eventPhase
 
@@ -59,7 +61,7 @@ Indică faza în care se află evenimentul.
 
 ### eveniment.stopPropagation()
 
-Invocarea acestei metode într-un arbore conduce la stoparea propagării evenimentului dincolo de obiectul curent. Invocarea acestei metode conduce la setarea fanionului „stop propagation” care aparține obiectului context.
+Invocarea acestei metode într-un arbore conduce la oprirea propagării evenimentului dincolo de obiectul curent. Invocarea acestei metode conduce la setarea fanionului „stop propagation” care aparține obiectului context.
 
 ### eveniment.stopImmediatePropagation()
 
@@ -76,7 +78,7 @@ Indică printr-un boolean dacă un eveniment poate fi anulat sau nu. Verificarea
 
 ### eveniment.preventDefault()
 
-Această metodă spune browserului că de nu există nimic care să gestioneze evenimentul, acesta să nu producă efectele. Totuși, evenimentul se va propaga cu specificația că nu va produce niciun efect iar dacă va da peste un event listener care apelează `stopPropagation()`, evenimentul va fi oprit din propagare.
+Această metodă spune browserului că de nu există nimic care să gestioneze evenimentul, acesta să nu producă efectele. Totuși, evenimentul se va propaga cu specificația că nu va produce niciun efect, iar dacă va da peste un event listener care apelează `stopPropagation()`, evenimentul va fi oprit din propagare.
 Atenție, funcționează doar dacă proprietatea `cancelable` este setată la `true`.
 
 ### eveniment.defaultPrevented
