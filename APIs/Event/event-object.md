@@ -1,6 +1,6 @@
 # Obiectul event
 
-În momentul în care se dedeclanșează un eveniment, toate informațiile relevante sunt introduse într-un obiect numit generic `event`. Acest obiect este pasat ca unic argument al unei fucții cu rol de receptor.
+În momentul în care se dedeclanșează un eveniment, toate informațiile relevante sunt introduse într-un obiect numit generic `event`. Acest obiect este pasat ca unic argument al unei fucții cu rol de receptor. Cele mai multe evenimente sunt legate de obiectul `window` sau de controlul elementelor unui formular.
 
 Obiectul `event` există câtă vreme se execută receptorii. Imediat după executarea acestora, obiectul `event` este distrus.
 
@@ -84,6 +84,14 @@ Este cazul în care apeși pe un element care nu are atașat propriul receptor.
 ### `event.trusted`
 
 Aceasta este o valoare Boolean, care în cazul `true` indică faptul că elementul a fost creat de browser. În cazul `false` indică faptul că elementul a fost creat programatic (Javascript).
+
+### `event.key`
+
+În cazul elementelor care permit input de text, atunci când se apasă o tastă, proprietatea va returna caracterul asociat. Pentru tastele care nu sunt caractere, va fi returnată denumirea lor în clar: "Enter", "Shift", "Down".
+
+### `event.char`
+
+Această proprietate are același comportament precum al lui `event.key` cu specificația că pentru tastele care nu sunt caractere, va returna valoarea `null`.
 
 ## Metode
 
