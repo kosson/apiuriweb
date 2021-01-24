@@ -79,6 +79,10 @@ Parsează textul ca HTML sau XML și inserează nodurile rezultate în arbore la
 
 Inserează un nod text într-o poziție relativă față de elementul pentru care a fost invocată.
 
+## `Element.matches()`
+
+Această metodă ia un șir de caractere ce reprezintă selectorul în bază căruia ar trebui regăsit un element și în compară chiar cu elementul pentru a vedea dacă este identic.
+
 ## `Element.querySelector()`
 
 Returnează primul `Node` care se potrivește cu selectorul specificat ca string în parametru. Acest element trebuie să fie descendent al elementului pe al cărui obiect se invocă.

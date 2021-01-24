@@ -88,5 +88,5 @@ Este declanșat atunci când unul sau mai multe puncte sunt poziționate pe supr
 
 ## Resurse
 
-[6. Extensions to the Element interface](https://www.w3.org/TR/pointerevents/#extensions-to-the-element-interface)
-[Element](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+- [6. Extensions to the Element interface](https://www.w3.org/TR/pointerevents/#extensions-to-the-element-interface)
+- [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element)
