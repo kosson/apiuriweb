@@ -25,7 +25,7 @@ Returnează rădăcina obiectului context, care, opțional, poate să includă �
 
 ## Node.hasChildNodes()
 
-Returnează un `Boolean` care indică dacă elementul are noduri copil.
+Metoda returnează un `Boolean` care indică dacă elementul are noduri copil.
 
 O posibilă aplicație oferită de MDN este parcurgerea recursivă a copiilor unui nod. Această aplicație utilă implică metoda, dar și proprietatea `Node.childNodes`.
 

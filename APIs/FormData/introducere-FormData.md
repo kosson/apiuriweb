@@ -1,6 +1,6 @@
 # FormData
 
-Este un constructor care crează obiecte ce reprezintă datele dintr-un formular. Să presupunem că avem unul deja.
+Este un constructor care creează obiecte ce reprezintă datele dintr-un formular. Să presupunem că avem unul deja.
 
 ```html
 <form id="descriere" name="descriere">
@@ -22,7 +22,7 @@ let form = document.getElementById('descriere');
 var dateFormular = new FormData(form);
 ```
 
-Parametrul acceptat este un element HTML `<form>`. În urma execuției constructorului, ceea ce va rezulta este un obiect al cărui chei sunt valorile proprietăților `name` ale elementelor formularului, iar valorile, cele introduse de utilizator.
+Parametrul acceptat este un element HTML `<form>`. În urma execuției constructorului, ceea ce va rezulta este un obiect ale cărui chei sunt valorile proprietăților `name` ale elementelor formularului, iar valorile, cele introduse de utilizator.
 
 Acest obiect se poate instanția gol și apoi completat folosind metoda `append()`.
 

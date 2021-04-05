@@ -45,8 +45,7 @@ Ref:
 
 ## Node.childNodes
 
-Este o proprietate read-only.
-Returnează un `NodeList` live cu toți copiii nodului curent. Lista indexată pozițional precum un `Array` care se constituie, este una de obiecte, nu de string-uri. Pentru că este live, lista `NodeList` va fi actualizată pentru fiecare modificare care apare.
+Este o proprietate read-onlycare returnează un `NodeList` live cu toți copiii nodului curent. Lista indexată pozițional precum un `Array` care se constituie, este una de obiecte, nu de string-uri. Pentru că este live, lista `NodeList` va fi actualizată pentru fiecare modificare care apare.
 
 ```javascript
 // Să presupunem că avem un element `<div>` în care sunt mai multe elemente.
