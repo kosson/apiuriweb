@@ -9,7 +9,7 @@ target.addEventListener(type, listener [, options]);
 target.addEventListener(type, listener [, useCapture]);
 ```
 
-Atunci când pasezi drept al treilea paramentru o valoare `Boolean`, indici opțiunea pentru modul în care se va face propagarea evenimentului (*bubbling* sau *capture*). Acel al treilea parametru se numește *useCapture*. Dacă are valoarea `true`, *listener*-ul va fi executat doar la faza de capture. Valoarea din oficiu este `false`, ceea ce înseamnă că evenimentul va face *bubbling*.
+Atunci când pasezi drept al treilea paramentru o valoare `Boolean`, indici opțiunea pentru modul în care se va face propagarea evenimentului (*bubbling* sau *capture*). Acel al treilea parametru se numește *useCapture*. Dacă are valoarea `true`, *listener*-ul va fi executat doar la faza de *capture*. Valoarea din oficiu este `false`, ceea ce înseamnă că evenimentul va face *bubbling*.
 
 În acest moment, cel mai bine ar fi să fie pasat un obiect drept al treilea parametru în care să fie menționate opțiunile.
 
@@ -119,6 +119,36 @@ Dacă are valoarea `true`, evenimentul va declașa execuția pentru o singură d
 #### `passive`
 
 Dacă are valoarea `true` indică faptul că funcția cu rol de *listener* nu va apela `preventDefault()` chiar dacă aceasta este activată în listener (`ev.preventDefault()`). În această configurare, va fi emis un avertisment în consolă.
+
+### Adăugarea funcției receptor la container
+
+Uneori pentru a gestiona mai multe elemente cu un singur eveniment, se va proceda la atașarea unui eveniment la elementul container și apoi identificarea elementului acționat cu proprietatea `target` a obiectului eveniment. Justificarea pentru o astfel de abordare este legată de eficientizarea și optimizarea codului. Ar fi contraproductiv dacă ai avea o colecție de elemente de același tip, de exemplu și ai atașa la fiecare același eveniment. Mai bine atașezi evenimentul la elementul container (părinte).
+
+```html
+<ul id="ceva">
+  <li>unu</li>
+  <li>doi</li>
+  <li>trei</li>
+</ul>
+<script>
+  let colectie = document.querySelector('#ceva');
+  colectie.addEventListener('click', (eveniment) => {
+    event.target.tagName === "LI" ? console.log(event.target.textContent) : console.log(`Bump`);;
+  });
+</script>
+```
+
+## Bună practică cere managementul evenimentelor
+
+Caută ca după ce vei fi termiat de procesat evenimentul să elimini funcția receptor. Acest lucru eliberează memoria crescând performanțele.
+
+```javascript
+// atașează receptori pe evenimente
+let handler = (event) => console.log(event.target.textContent);
+document.addEventListener('click', handler);
+// după ce ai terminat cu ei, șterge-i!
+document.removeEventListener('click', handler);
+```
 
 ## Resurse
 

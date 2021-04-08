@@ -1,6 +1,14 @@
 # FormData
 
-Este un constructor care creează obiecte ce reprezintă datele dintr-un formular. Să presupunem că avem unul deja.
+Această interfață oferă posibilitatea de a constitui perechi cheie/valoare din câmpurile unui formular. În cazul în care datele formularului sunt trimise printr-o metodă POST, datele vor fi codate conform "multipart/form-data". Un obiect ce este o instanță `FormData` poate fi parcurs cu un `for...of`.
+
+Constructorul este `FormData()` și instanțierea se face cu `new`, precum în exemplul dat.
+
+```javascript
+var formData = new FormData();
+```
+
+Să presupunem că avem un formular deja.
 
 ```html
 <form id="descriere" name="descriere">
