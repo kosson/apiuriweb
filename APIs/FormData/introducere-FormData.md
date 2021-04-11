@@ -43,3 +43,4 @@ dateFormular.append('Nume', 'Kosson');
 
 - [FormData, javascript.info](https://javascript.info/formdata)
 - [FormData, Mozilla MDN](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+- [Using FormData Objects | MDN](https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects)
