@@ -19,6 +19,8 @@ Primul argument al constructorului `blobParts` este un array de bytes, iar al do
 
 Argumentul `blobParts` poate fi de tip text sau chiar binar. Atunci când folosim date binare, `blobParts` poate fi un `TypedArray`. Pentru a scoate un `TypedArray` dintr-un `Blob`, se va folosi `FileReader`.
 
+## Citirea datelor dintr-un Blob cu FileReader
+
 Pentru a citi datele dintr-un `Blob`, se poate folosi clasa `FileReader`.
 
 ```javascript
@@ -30,6 +32,90 @@ myReader.addEventListener("loadend", function(e){
 // pornește citirea
 myReader.readAsText(myBlob);
 ```
+
+## Citirea datelor dintr-un Blob folosind Response
+
+O altă modalitate de a citi datele dintr-un `Blob` este utilizarea interfeței `Response` a API-ului `Fetch`.
+
+```javascript
+const text = await (new Response(blob)).text();
+```
+
+## Citirea datelor folosind metoda text()
+
+Poți citi datele unui `Blob` folosind metoda `text()`.
+
+```javascript
+const text = await blob.text();
+```
+
+## Constructorul Blob
+
+Folosind constructorul `Blob` creezi un obiect Blob care conține o concatenare a tuturor datelor din array-ul pasat acestuia.
+
+```javascript
+var blobNou = new Blob(array, opțiuni);
+```
+
+### Parametrii constructorului
+
+#### array
+
+Acest parametru poate fi un `Array` alcătuit din obiecte `ArrayBuffer`, `ArrayBufferView`, `Blob` sau `USVString` sau un mix din oricare dintre acestea. Aceste date vor constitui conținutul `Blob`-ul. Obiectele `USVString` sunt codate UTF-8.
+
+#### opțiuni
+
+Acesta este un obiect opțional de tip `BlobPropertyBag` cu ajutorul căruia sunt specificate următoarele proprietăți:
+
+- `type`, fiind un MIME type a datelor care vor fi stocate în Blob. Valoarea din oficiu este un string gol;
+- `endings`, indicând modul în care este tratat caracterul newline (`\n`), dacă respectivele date sunt text. Această opțiune este folosită pentru a converti newline la convențiile specifice sistemului de operare, vei pune valoarea `native`. Valoarea din oficiu este `transparent` care va conduce la copierea caracterelor newline așa cum sunt, fără nicio modificare.
+
+```javascript
+var aFileParts = ['<a id="a"><b id="b">Salut!</b></a>'];  // un array care constă dintr-un DOMString
+var oMyBlob = new Blob(aFileParts, {type : 'text/html'}); // blob-ul
+const obj = {salut: 'popor'};
+const blob = new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
+```
+
+## Proprietățile instanței
+
+### Blob.prototype.size
+
+Proprietatea read-only returnează dimensiunea unui `Blob` sau a unui `File` în bytes.
+
+```javascript
+// fileInput is a HTMLInputElement: <input type="file" multiple id="campFisiere">
+var fileInput = document.getElementById("campFisiere");
+
+// files este un obiect FileList (similar lui NodeList)
+var files = fileInput.files;
+
+for (var i = 0; i < files.length; i++) {
+  console.log(files[i].name + " are o dimensiune de " + files[i].size + " Bytes");
+}
+```
+
+### Blob.prototype.type
+
+Proprietatea read-only este un string care indică tipul de MIME a datelor din Blob. Dacă tipul este necunoscut, atunci stringul este gol.
+
+## Metodele instanței
+
+### Blob.prototype.arrayBuffer()
+
+Această metodă returnează o promisiune care se rezolvă cu un `ArrayBuffer` format din întregul conținut al `Blob`-ului ca date binare.
+
+### Blob.prototype.slice()
+
+Metoda returnează un nou obiect `Blob` care conține date în palierul specificat de bytes al blob-ului pe care este apelată. Propriu-zis poți obține un nou `Blob` folosind doar o parte a fișierului. Această metodă își dovedește utilitatea în momentul în care trimiți un fișier în calupuri către server.
+
+### Blob.prototype.stream()
+
+Metoda retunează un `ReadableStream` care poate fi folosit pentru a citi conținutul `Blob`-ului.
+
+### Blob.prototype.text()
+
+Metoda returnează o promisiune care rezolvă cu un `USVString` având conținutul `Blob`-ului interpretat ca text UTF-8.
 
 ## Lucrul cu resurse text
 

@@ -4,7 +4,7 @@ Este o interfață care oferă posibilitatea de a observa modificări ale arbore
 
 ## Constructor - MutationObserver()
 
-Creezi un nou MutationObserver care va invoca o funcție callback specifică atunci când apar modificări în DOM. Funcția callback așteaptă ca argument un obiect `MutationRecord`. Acesta va oferi starea elementelor observate.
+Creezi un nou `MutationObserver` care va invoca o funcție callback specifică atunci când apar modificări în DOM. Funcția callback așteaptă ca argument un obiect `MutationRecord`. Acesta va oferi starea elementelor observate.
 
 ## Obiectul MutationRecord
 
@@ -68,8 +68,6 @@ observer.observe(paragraf, options);
 #### MutationRecord.target
 
 Tipul este `Node`.
-
-
 
 ## Metoda `disconnect()`
 

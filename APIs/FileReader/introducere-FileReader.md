@@ -14,7 +14,7 @@ Returnează un obiect `FileReader`.
 
 ### `FileReader.error`
 
-Este o proprietate read-only care returnează un obiect `DOMException` care conține eroarea ce a apărut la citirea fișierului.
+Este o proprietate read-only care returnează un obiect `DOMException` care conține eroarea apărută la citirea fișierului.
 
 ### `FileReader.readyState`
 
@@ -91,7 +91,44 @@ Folosești această metodă pentru a opri încărcarea fișierului. Atunci când
 
 ### `FileReader.readAsArrayBuffer()`
 
-Metoda pornește citirea conținutului `Blob`-ului specificat și în momentul în care s-a încheiat, atributul `result` va conține un `ArrayBuffer` care reprezintă datele fișierului.
+Metoda pornește citirea conținutului `Blob`-ului specificat și în momentul în care s-a încheiat, atributul `result` va conține un `ArrayBuffer` care reprezintă datele fișierului. Rezultatul folosirii metodei `readAsArrayBuffer(blob)` aplicate pe un obiect de tip `Blob`, este un obiect cu date neprelucrate (*raw*) de o dimensiune fixă. Pentru că `FileReader` face procesările asincron, va declanșa un eveniment `onload` atunci când rezultatul este gata.
+
+Mai jos este un exemplu de încărcare a unei imagini folosind drept nivel de transport Socket.io așa cum se desprinde din articolul [How do I send image to server via socket.io? | stackoverflow.com](https://stackoverflow.com/questions/59478402/how-do-i-send-image-to-server-via-socket-io).
+
+```javascript
+// client
+document.getElementById('file').addEventListener('change', function() {
+  const reader = new FileReader();
+  reader.onload = function () {
+    const bytes = new Uint8Array(this.result);
+    socket.emit('image', bytes);
+  };
+  reader.readAsArrayBuffer(this.files[0]);
+}, false);
+
+// server
+socket.on('image', async image => {
+    // image is an array of bytes
+    const buffer = Buffer.from(image);
+    await fs.writeFile('/tmp/image', buffer).catch(console.error); // fs.promises
+});
+```
+
+Pentru a emite o imagine către client folosind Socket.io.
+
+```javascript
+// Server side
+socket.emit('image', image.toString('base64')); // image should be a buffer
+// Client side
+socket.on('image', image => {
+    // create image with
+    const img = new Image();
+    // change image type to whatever you use, or detect it in the backend
+    // and send it if you support multiple extensions
+    img.src = `data:image/jpg;base64,${image}`;
+    // Insert it into the DOM
+});
+```
 
 ### `FileReader.readAsBinaryString()`
 
