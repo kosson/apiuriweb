@@ -54,6 +54,7 @@ Indexul este un mecanism de stocare cu perechi cheie/valoare în care valorile s
 #### `key`
 
 Este valoarea prin care alte valori sunt organizate și pot fi accesate dintr-un *object store*. Un *object store* poate deriva chei din una sau mai multe surse:
+
 - un generator de chei,
 - un *key path* sau
 - o cheie menționată explicit.
@@ -136,3 +137,4 @@ Rezultatul operațiunii `open()` este o instanță `IDBDatabase`.
 - [Indexed Database API 3.0, Editor’s Draft, 15 July 2019](https://w3c.github.io/IndexedDB/)
 - [Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
 - [IndexedDB with usability, Github](https://github.com/jakearchibald/idb)
+- [IndexedDB with promises and async/await](https://filipvitas.medium.com/indexeddb-with-promises-and-async-await-3d047dddd313)
