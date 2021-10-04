@@ -54,6 +54,11 @@ Este un șir `USVString` care indică parametrii de căutare dacă aceștia exis
 
 Este un obiect `URLSearchParams` din care pot fi obținuți fiecare dintre parametri.
 
+```javascript
+let tst = new URL("https://drive.google.com/open?id=1sjlLCkd-gUfs9fSO8UTzerZDL9IEFswJ");
+console.log(params.get('id')); // 1sjlLCkd-gUfs9fSO8UTzerZDL9IEFswJ
+```
+
 ### `URL.username`
 
 Este un string `USVString` care conține username-ul specificat înainte de numele domeniului.
