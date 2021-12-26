@@ -1,6 +1,6 @@
 # Web components
 
-Componentele web constau din utilizarea a trei tehnologii diferite:
+Componentele web folosesc trei tehnologii diferite:
 
 - [Elemente custom](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements), fiind elemente HTML perfect valide,
 - [Shadow DOM](https://dom.spec.whatwg.org/#shadow-trees) ce permit izolarea CSS-ului și a JavaScriptului în ceva asemănător iframe-urilor și
@@ -8,9 +8,9 @@ Componentele web constau din utilizarea a trei tehnologii diferite:
 
 ## Elementele custom
 
-Sunt elemente pe care le putem numi cum dorim cu specificația că trebuie să conțină o linie în formularea lor: `<elementul-meu>`.
+Sunt elemente pe care le putem numi cum dorim cu mențiunea că trebuie să conțină o linie (caracterul minus) în redactarea lor: `<elementul-meu>` (kebab-style).
 
-Aceste elemente personalizate au propria semantică, au propriul comportament și markup. Companiile care construiesc browsere, nu introduc elemente custom pentru a preveni orice conflict.
+Aceste elemente personalizate au propria semantică, au propriul comportament și markup. Companiile care construiesc browsere, nu introduc elemente custom pentru a preveni orice conflict. Tag-urile HTML5 au drept corespondent în DOM un singur element. În cazul elementelor particularizate, acestea pot avea multiple elemente la rândul lor.
 
 Pentru a defini comportamentul unui element personalizat, trebuie creat comportamentul care va guverna viitorul element folosind JavaScript. În exemplul alăturat, vom crea elementul `<componenta-proprie>`.
 

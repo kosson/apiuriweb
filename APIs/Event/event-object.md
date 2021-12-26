@@ -1,6 +1,6 @@
 # Obiectul event
 
-În momentul în care se dedeclanșează un eveniment, toate informațiile relevante sunt introduse într-un obiect numit generic `event`. Acest obiect este pasat ca unic argument al unei fucții cu rol de receptor. Cele mai multe evenimente sunt legate de obiectul `window` sau de controlul elementelor unui formular.
+În momentul în care se declanșează un eveniment, toate informațiile relevante sunt introduse într-un obiect numit generic `event`. Acest obiect este pasat ca unic argument al unei funcții cu rol de receptor. Cele mai multe evenimente sunt legate de obiectul `window` sau de controlul elementelor unui formular.
 
 Obiectul `event` există câtă vreme se execută receptorii. Imediat după executarea acestora, obiectul `event` este distrus.
 

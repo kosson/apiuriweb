@@ -18,7 +18,7 @@ nume_template = `
   </div>
 `;
 
-customElements.define('nume-tag', class NumeTag extends HTMLElement {
+class NumeTag extends HTMLElement {
   // pas 1
   constructor () {
     super(); // creează linia de moștenire de la HTMLElement
@@ -55,14 +55,16 @@ customElements.define('nume-tag', class NumeTag extends HTMLElement {
   this.selected.addEventListener('click', () => {
     this.shadowRoot.querySelector('#lista').classList.remove('hidden');
   });
-});
+}
+
+customElements.define('nume-tag', NumeTag);
 ```
 
 Apoi este necesar să fie atașat un shadow DOM care să *ambaleze*  întregul cod HTML intern al componentei pe care o creezi: `this.attachShadow({mode: 'open'})`. Această opțiune din obiectul pasat, `mode` este setată cu valoarea `open`, ceea ce înseamnă că interiorul componentei este acționabil folosind JavaScript. Metoda `attachShadow` creează un `shadowRoot`. În `shadowRoot` poți introduce direct cod HTML sau un template HTML așa cum este ilustrat în exemplu la pasul 3 bis.
 
 Poți vedea `shadowRoot`-ul dacă selectezi elementul componentei: `document.querySelector('nume-componenta').shadowRoot`.
 
-Odată având aceste două lucruri setate, `super()`, care face legătura cu, clasa mamă pe care o extindem și atașăm și un shadowRoot, putem introduce codul HTML dorit în `shadowRoot`. Aici putem introduce template-uri sau putem scrie direct HTML. Să presupunem că punem elementul în pagina HTML.
+Odată având aceste două lucruri setate, `super()`, care face legătura la clasa mamă pe care o extindem și atașăm și un shadowRoot, putem introduce codul nostru HTML în `shadowRoot`. Aici putem introduce template-uri sau putem scrie direct HTML. Să presupunem că punem elementul în pagina HTML.
 
 ```html
 <nume-tag mentiune="interesant" avatar="https://randomuser.me/api/portraits/men/1.jpg"></nume-tag>
@@ -212,9 +214,7 @@ customElements.define('popup-info', PopUpInfo);
 și apoi în HTML vom introduce elementul:
 
 ```html
-<popup-info img="img/alt.png" data-text="Your card validation code (CVC)
-  is an extra security feature — it is the last 3 or 4 numbers on the
-  back of your card."></popup-info>
+<popup-info img="img/alt.png" data-text="Codul este necesar pentru validare."></popup-info>
 ```
 
 În exemplul de mai sus, avem elementul căruia i se aplică stilizarea CSS folosind un element `<style>`, dar acest lucru este posibil și prin referirea unui stylesheet extern accesat printr-un element `<link>`. Am putea avea următorul amendament al codului de exemplificare de mai sus.
@@ -231,7 +231,7 @@ shadow.appendChild(linkElem);
 
 ## Elemente HTML existente modificate
 
-În cazul în care ai nevoie să particularizezi element HTML canonice, poți face acest lucru extinzând clasa lor specifică. Exemplul oferit de MDN este cel al unei liste de elemente neordonate a cărui element `<li>` este modificat astfel încât să colapseze.
+În cazul în care ai nevoie să modifici elemente HTML canonice, poți face acest lucru extinzând clasa lor specifică. Exemplul oferit de MDN este cel al unei liste de elemente neordonate a cărui element `<li>` este modificat astfel încât să colapseze.
 
 ```javascript
 class ExpandingList extends HTMLUListElement {
@@ -340,7 +340,7 @@ Pagina HTML ar putea fi:
     </style>
 </head>
 <body>
-    <h1>Expanding list web component</h1>
+    <h1>Componentă de tip listă care este colapsabilă/expandabilă</h1>
     <ul is="expanding-list">
         <li>UK
             <ul>
@@ -430,12 +430,19 @@ customElements.define('word-count', WordCount, { extends: 'p' });
 
 Acesta se inserează în DOM astfel: `<p is="word-count"></p>`.
 
-## Callback-urile ciclului de viață al componentei
+## Callback-urile ciclului de viață al componentei - lifecycle methods
 
-Aceste metode oferă posibilitatea de a adăuga interactivitate.
+Aceste metode oferă posibilitatea de a adăuga interactivitate. Acest lucru înseamnă că în momentul în care apar evenimente pe elementul cu rol de componentă, vei putea rula codul necesar ca răspuns.
+
+Implementările browserelor pun la dispoziție patru metode de lifecycle care pot fi atașate de o componentă:
+
+- `connectedCallback` care este rulată în momentul în care elementul este atașat în DOM;
+- `disconnectedCallback` care este rulat atunci când elementul este scos din DOM;
+- `attributeChangedCallback` este rulată atunci când atributele unei componente web se modifică. Vezi că trebuie să urmărești aceste modificări punctual;
+- `adoptedCallback` care este rulat atunci când componenta este scoasă dintr-un document HTML și este introdusă în altul.
 
 ```javascript
-customElements.define('nume-tag', class NumeTag extends HTMLElement {
+class NumeTag extends HTMLElement {
   // pas 1
   constructor () {
     super(); // creează linia de moștenire de la HTMLElement
@@ -451,26 +458,28 @@ customElements.define('nume-tag', class NumeTag extends HTMLElement {
   this.shadowRoot.querySelector('img').src = this.getAttribute('avatar');
 
   toggleInfo () {
-    console.log('Este');
+    console.log('Am creat componenta');
   }
 
-  // introducerea receptorilor pe evenimente
+  // introducerea receptorilor pe evenimente (lifecycle method)
   connectedCallback () {
     this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => {
       this.toggleInfo();
     });
   }
 
-  // eliminarea receptorilor de pe evenimente
+  // eliminarea receptorilor de pe evenimente (lifecycle method)
   disconnectedCallback () {
     this.shadowRoot.querySelector('#toggle-info').removeEventListener();
   }
-});
+}
+
+customElements.define('nume-tag', NumeTag);
 ```
 
 ### `connectedCallback()`
 
-Acest callback este invocat de fiecare dată când elementul specializat este introdus (*appended*) într-un element al documentului la care se conectează. Se va mai executa ori de câte ori nodul va fi mutat. Altfel spus, ori de câte ori se încarcă elementul nostru specializat/componenta, tot codul din acest callback va fi executat. Aici este locul în care, de exemplu poți seta toate receptoarele pentru evenimentele elementelor din componentă.
+Acest callback este invocat de fiecare dată când elementul specializat este introdus (*appended*) într-un element al documentului la care se conectează. Adică atunci când este montat în DOM. Se va mai executa ori de câte ori nodul va fi mutat. Altfel spus, ori de câte ori se încarcă elementul nostru specializat/componenta, tot codul din acest callback va fi executat. Aici este locul în care, de exemplu poți seta toate receptoarele pentru evenimentele elementelor din componentă.
 
 Este posibil ca execuția să se întâmple înainte ca întregul conținut să fie parsat. În cazul în care se întâmplă să fie apelat când elementul nu mai este conectat, folosești pentru test `Node.isConnected()` pentru a te asigura.
 
@@ -484,7 +493,101 @@ Acest callback este invocat de fiecare dată când un element specializat este m
 
 ### `attributeChangedCallback`
 
-Acest callback este invocat de fiecare dată când unui element specializat i se adaugă câte un atribut, când i se șterge unul sau când este modificat. Atributele pentru care se face observarea sunt menționate prin metoda statică `get observedAttributes`.
+Acest callback este invocat de fiecare dată când unui element specializat i se adaugă câte un atribut, când i se șterge unul sau când este modificat. Atunci când se petrece modificarea trebuie să-i comunici componentei acest lucru. Atributele pentru care se face observarea sunt menționate prin metoda statică `get observedAttributes`.
+
+```javascript
+class MyComponent extends HTMLElement {
+  connectedCallback() {
+      this.render(); // afișează conținutul
+  }
+
+   // Ar putea fi și :
+  // static observedAttributes = ['message'];
+  static get observedAttributes() {
+      return ['message'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+      this.render(); // re-afișează conținutul dacă s-a modificat vreun atribut
+  }
+
+  render () {
+      const message = this.attributes.message.value || 'Salutare';
+      this.innerHTML = `<h1>${message}</h1>`;
+  }
+}
+
+customElements.define('my-component', MyComponent);
+```
+
+Un amănunt foarte important este acela că valorile atributelor sunt întotdeauna string-uri. În subsidiar, se aplică un `toString`. Pentru a le utiliza conform unui tip de valoare, trebuie să fie convertite la acel tip. Acesta este un detaliu important pe care Corbin Crutchley îl aduce în atenție.
+
+```javascript
+class NumValidator extends HTMLElement {
+  connectedCallback() {
+      this.render();
+  }
+
+  static get observedAttributes() {
+      return ['max'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+      this.render();
+  }
+
+  render() {
+      // Coerce "attribute.value" la number.
+      // Reține că atributele trebuie pasate ca stringuri.
+      const max = Number(this.attributes.max.value || Infinity);
+      // ...
+  }
+}
+```
+
+Pentru a pasa unui atribut structuri de date mai complexe, metoda ar fi să aplici `JSON.stringify` pe acea structură, pasezi rezultatul atributului, iar în interiorul componentei, deserializezi cu `JSON.parse` și folosești rezultatul pentru a hidrata structura componentei cu date.
+
+```javascript
+<script>
+  class MyComponent extends HTMLElement {
+      connectedCallback() {
+          this.render();
+      }
+
+      static get observedAttributes() {
+          return ['todos'];
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+          this.render();
+      }
+
+      render() {
+          const todosArr = JSON.parse(this.attributes.todos.value || '[]');
+          const todoEls = todosArr
+              .map(todo => `
+              <li>
+                <!-- checked=”false” nu face ceea ce crezi -->
+                <input type="checkbox" ${todo.completed ? 'checked' : ''}/>
+                ${todo.name}
+              </li>
+          `)
+              .join('\n');
+          this.innerHTML = `<ul>${todoEls}</ul>`;
+      }
+  }
+
+  customElements.define('my-component', MyComponent);
+</script>
+
+<my-component
+  id="mycomp"
+  todos="[{&quot;name&quot;:&quot;hello&quot;,&quot;completed&quot;:false}]">
+</my-component>
+```
+
+Adu-ți mereu aminte că `console.log(Boolean("false")); // true` asta însemnând că atributul `checked="false"` nu a influiența în niciun fel pentru că interpretarea va fi la valoarea `true` a stringului `"false"`.
+
 
 ### Exemplul MDN
 
@@ -657,3 +760,4 @@ custom-element:state(foo) {
 - [::part and ::theme, an ::explainer](https://meowni.ca/posts/part-theme-explainer/)
 - [The Gold Standard Checklist for Web Components | github](https://github.com/webcomponents/gold-standard/wiki)
 - [WebComponents.org](https://webcomponents.github.io/)
+- [Web Components 101: Vanilla JS | Corbin Crutchley | July 15, 2021](https://unicorn-utterances.com/posts/intro-to-web-components-vanilla-js/)

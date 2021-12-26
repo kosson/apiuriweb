@@ -14,19 +14,19 @@ Creează un element pentru care este specificat tipul. Instanța returnată la m
 
 Ca parametru introduci numele tag-ului. Vezi că în cazul XML-ului, numele este sensibil la majuscule (case-sensitive).
 
-## createEvent()
+## `createEvent()`
 
 Metoda creează un obiect eveniment.
 
-## createNodeIterator()
+## `createNodeIterator()`
 
 Metoda creează un obiect `NodeIterator`.
 
-## createProcessingInstruction()
+## `createProcessingInstruction()`
 
 Metoda creează un obiect `Processinginstruction`.
 
-## createRange()
+## `createRange()`
 
 Metoda creează un obiect `Range`.
 
@@ -39,15 +39,15 @@ Creează un obiect `DocumentFragment` gol. Este returnat un `new DocumentFragmen
 Creează un nod de `Text` având conținutul specificat printr-un șir de caractere.
 Ca parametru primește șirul de caractere.
 
-## createTreeWalker()
+## `createTreeWalker()`
 
 Creează un obiect `TreeWalker`.
 
-## elementFromPoint()
+## `elementFromPoint()`
 
 Returnează cel mai de sus element de la coordonatele specificate.
 
-## elementsFromPoint()
+## `elementsFromPoint()`
 
 Returnează un array de elemente de la coordonatele specificate.
 
@@ -71,19 +71,19 @@ Creează un atribut de un anume tip specificat prin parametru. După creare, poa
 
 Creează un obiect `EntityReference` și primește un parametru care va indica numele acestui `EntityReference`.
 
-## exitPictureInPicture()
+## `exitPictureInPicture()`
 
 Trimite video înapoi în containerul original.
 
-## getAnimations()
+## `getAnimations()`
 
 Returnează un array al tuturor obiectelor `Animation` care sunt în efect ale căror elemente țintite sunt descendenții documentului.
 
-## getElementsByClassName()
+## `getElementsByClassName()`
 
 Returnează o listă de elemente care au o anumită clasă.
 
-## getElementById(String id)
+## `getElementById(String id)`
 
 Returnează referința către un obiect care care are un id specificat.
 
@@ -91,40 +91,40 @@ Returnează referința către un obiect care care are un id specificat.
 
 Returnează un `NodeList` al tuturor `Elements` care au un anume nume de tag. Drept parametru, primește numele tagului după care să genereze colecția de `NodeList`. Dacă-i pasezi ca argument caracterul `*`, atunci va genera o colecție cu toate tagurile existente în document.
 
-## getElementsByTagNameNS()
+## `getElementsByTagNameNS()`
 
 Returnează o listă cu toate elementele cu un anumit tag și namespace.
 
-## getSelection()
+## `getSelection()`
 
 Metoda returnează un obiect `Selection` care reprezintă fragmentul de text selectat de utilizator de la poziția curentă a carret-ului.
 
-## importNode()
+## `importNode()`
 
 Returnează o clonă a nodului dintr-un document extern.
 
-## requestStorageAccess()
+## `requestStorageAccess()`
 
 Returnează un `Promise` care se rezolvă dacă este oferit accesul la un serviciu terț.
 
-## querySelector()metode
+## `querySelector()`
 
-Returnează primul element din document care se potrivește cu selectorul/ii CSS specificați ca argumente.
+Returnează primul element din document care se potrivește cu selectorul/ii CSS specificat(ți) ca argumente.
 
-## querySelectorAll()
+## `querySelectorAll()`
 
 Returnează o listă cu toate nodurile elementelor care se potrivesc selectorilor CSS specificați.
 
 ## Extinderea interfeței `Dcocument` cu `XPathEvaluator`
 
-### Document.createExpression()
+### `Document.createExpression()`
 
 Compilează un `XPathExpression` care poate metodefi folosit apoi pentru evaluări repetate.
 
-### Document.createNSResolver()
+### `Document.createNSResolver()`
 
 Creează un obiect `XPathNSResolver`.
 
-### Document.evaluate()
+### `Document.evaluate()`
 
 Evaluează o expresie XPath.
