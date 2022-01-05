@@ -15,7 +15,7 @@ La momentul în care un eveniment se declanșează, apelarea callback-ul are dre
 
 ## Anatomie
 
-Fiecare eveniment DOM, de fapt, este un obiect care moștenește proprietățile și metodele interfeței `Event`. Toate evenimentele implementează metodele interfeței `EventTarget`. Fiecare dintre evenimentele DOM are proprietăți și metode caracteristice care se adaugă celor puse la dispoziție de interfața `Event`.
+Fiecare eveniment DOM, de fapt, este un obiect care moștenește proprietățile și metodele interfeței `Event`. Toate evenimentele implementează metodele interfeței `EventTarget`. Fiecare dintre evenimentele DOM are proprietăți și metode specifice care se adaugă celor puse la dispoziție de interfața `Event`.
 Pentru a răspunde unui eveniment, browserul, mai întâi trebuie să *captureze* evenimentul, iar această etapă se numește *înregistrarea evenimentului* - `event registration`. Mecanismul prin care se face acest lucru este acela al setării de către programator a unor funcții de răspuns la acel eveniment. Aceste funcții de răspuns se numesc în limba engleză `event handlers`. Atunci când se creează evenimentul, de fapt este generat un obiect eveniment, care este asociat mai apoi de browser cu funcția de răspuns. Funcția de răspuns este mai apoi trimisă în coada de așteptare. Când stiva de execuție (call stack) este liberă, se trimite spre execuție funcția răspuns.
 
 Cel mai simplu event handler este cel pe care-l oferă un atribut pus direct în codul HTML.
@@ -212,7 +212,7 @@ Ajungând la copil, evenimentul va executa callback-ul pentru copil și evenimen
 
 Evenimentul `click` pornește în faza de capturing.
 
-Apoi motorul se uita dacă există vreun părinte pornind de la elementul care a fost acționat și care are capturing-ul activat prin `true`. În cazul nostru nu. Pentru că nu există niciun `onclick` listener în capture la vreun părinte, mototul pornește să facă bubbling de la elementul acționat către container. Astfel, este apelat `arataDetaliiCopil()` urmată de `arataDetaliiGazda()`.
+Apoi motorul se uita dacă există vreun părinte pornind de la elementul care a fost acționat și care are capturing-ul activat prin `true`. În cazul nostru nu. Pentru că nu există niciun `onclick` listener în capture la vreun părinte, motorul pornește să facă bubbling de la elementul acționat către container. Astfel, este apelat `arataDetaliiCopil()` urmată de `arataDetaliiGazda()`.
 
 ### Adăugarea funcției receptor la container
 
@@ -227,10 +227,45 @@ Uneori pentru a gestiona mai multe elemente cu un singur eveniment, se va proced
 <script>
   let colectie = document.querySelector('#ceva');
   colectie.addEventListener('click', (eveniment) => {
-    event.target.tagName === "LI" ? console.log(event.target.textContent) : console.log(`Bump`);;
+    event.target.tagName === "LI" ? console.log(event.target.textContent) : console.log(`Bump`);
   });
 </script>
 ```
+
+Această practică se numește *event delegation*. Metoda face uz de faza de bubbling cu scopul de a atribui un receptor capabil să gestioneze toate evenimentele de un anumit tip.
+
+```html
+<ul id="ceva">
+  <li id="unu">unu</li>
+  <li id="doi">doi</li>
+  <li id="trei">trei</li>
+</ul>
+<script>
+  let colectie = document.querySelector('#ceva');
+  colectie.addEventListener('click', (eveniment) => {
+    let target = eveniment.target;
+    switch (target.id) {
+      case "unu":
+        console.log("Sunt primul");
+        document.title = "Titlul nou";
+        break;
+      case "doi":
+        location.href = "www.undeva.ro";
+        break;
+      case "trei":
+        console.log("trei");
+        break;
+    }
+  });
+</script>
+```
+
+Uneori cel mai bine este să atașezi chiar documentului un event handler care să trateze evenimetele de un anumit tip care ar putea apărea în pagină. Avantajele ar fi următoarele:
+- Obiectul `document` este disponibil de îndată și îi pot fi atașare eveniment în orice moment al ciclului de viață. Acest lucru înseamnă că de îndată ce elementul este afișat, are și comportamentul definit deja;
+- o astfel de atribuire se face dooar unei singure referințe din DOM;
+- este necesară mai puțină memorie.
+
+Evenimentele care se pretează pentru *event delegation* sunt `click`, `mousedown`, `mouseup`, `keydown`, `keyup` și `keypress`. Evenimentele `mouseover` și `mouseout` fac bubble dar sunt mai complicat de gestionat pentru că necesită calcularea poziției.
 
 ## Bună practică
 
