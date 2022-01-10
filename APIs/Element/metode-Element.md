@@ -103,6 +103,28 @@ Setează un atribut unui element pentru care se face apelul metodei.
 
 Setează un atribut unui element și pentru un anumit namespace pentru care se face apelul metodei.
 
+## `Element.remove()`
+
+Metoda elimină elementul din arborele din care face parte. Pur și simplu se distruge legătura dintre părintele elementului și elementul cu rol de copil.
+
+```javascript
+var el = document.getElementById('div3');
+el.remove();
+```
+
+Spre deosebire de metoda `removeChild` a lui `Node`, această metodă are nevoie doar de copil. Rezultatul obținut este același.
+
+În cazul în care dorești eliminarea tuturor elementelor care aparțin unei anumite clase, faci selecția folosind `querySelectorAll` pentru că nu returnează o colecție live și este iterabil.
+
+```javascript
+function f() {
+   const items = document.querySelectorAll(".buddy_blocks");
+   for (let item of items) {
+      item.remove();
+   }
+}
+```
+
 ## `Element.removeAttribute()`
 
 Elimină atributul menționat de pe elementul curent.

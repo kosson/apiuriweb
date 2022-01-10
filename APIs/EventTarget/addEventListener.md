@@ -1,6 +1,6 @@
 # EventTarget.addEventListener()
 
-Este o metodă căreia îi poți pasa o funcție sau un obiect care implementează care implementează `EventTarget` în lista *event listener*-ilor pentru tipul de eveniment specificat. Pentru simplitate vom numi un event listener *receptor*.
+Este o metodă căreia îi poți pasa o funcție sau un obiect care implementează  `EventTarget` în lista *event listener*-ilor pentru tipul de eveniment specificat. Pentru simplitate vom numi în limba română un **event listener** *receptor*.
 
 ## Semnătura
 

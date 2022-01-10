@@ -136,7 +136,48 @@ Curăță nodurile text de sub elementul pe al cărui nod se aplică metoda. Rez
 
 ## Node.removeChild()
 
-Elimină un nod copil dintre cei ai elementului curent.
+Metoda este folosită pentru a elimina din DOM un element. Nodurile sunt întotdeauna copilul unui element din DOM (`parentNode`).
+
+```javascript
+let childNode = parentNode.removeChild(childNode);
+```
+
+Atunci când elementul este eliminat din DOM, acesta va fi menținut în memorie. Dacă dorești distrugerea obiectului de către colectorul de gunoi (*garbage colector*), folosește aceeași sintaxă fără a mai ține o referință către obiect.
+
+```javascript
+parentNode.removeChild(childNode);
+```
+
+Obiectul va mai fi ținut în memorie până când colectorul de gunoi îl va elimina.
+
+### Eliminarea atunci când cunoști părintele
+
+Având următoarea structură
+
+```html
+<div id="top">
+  <div id="nested"></div>
+</div>
+```
+
+Ai putea șterge folosind următoarea secvență.
+
+```javascript
+let d = document.getElementById("top");
+let d_nested = document.getElementById("nested");
+let throwawayNode = d.removeChild(d_nested);
+```
+
+### Eliminare atunci când nu cunoști părintele
+
+```javascript
+let node = document.getElementById("nested");
+if (node.parentNode) {
+  node.parentNode.removeChild(node);
+}
+```
+
+### Elimină un nod copil dintre cei ai elementului curent
 
 ```javascript
 // eliminarea tuturor copiilor unui nod
@@ -147,6 +188,8 @@ function removeAllChildren(element) {
 }
 removeAllChildren(document.body); // ca alternativă la `document.body.innerHTML`
 ```
+
+Metoda returnează elementul care a fost eliminat.
 
 ## Node.replaceChild()
 
