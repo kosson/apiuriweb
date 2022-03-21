@@ -7,6 +7,12 @@ Interfețele pe care acest API le pune la dispoziție:
 - `CloseEvent`,
 - `MessageEvent`.
 
+Pentru a crea un socker web simplu se va folosi constructorul.
+
+```javascript
+const socket = new WebSocket("ws://ceva.ro");
+```
+
 ## Resurse
 
 - [The WebSocket Protocol](https://datatracker.ietf.org/doc/html/rfc6455)

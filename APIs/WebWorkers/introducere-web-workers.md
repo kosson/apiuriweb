@@ -1,6 +1,6 @@
 # Web Workers
 
-Acesta este un mecanism pe care browserul îl pune la dispoziție pentru a rula programe JavaScript într-un thread separat de cel al aplicației web din pagină. Acest lucru permite executarea unor operațiuni care necesită o prelucrare dedicată care să beneficieze de resurse separate.
+Acesta este un API pe care browserul îl pune la dispoziție pentru a rula programe JavaScript într-un fir de execuție separat de cel al aplicației web din pagină. Acest lucru permite executarea unor operațiuni care necesită o prelucrare dedicată care să beneficieze de resurse separate.
 
 Scopul este de a face aplicațiile *smooth* (*fluente*) și *responsive* (*receptive*, *care reacționează*).
 
@@ -20,6 +20,8 @@ Un worker poate fi utilizat în comun de mai multe programe. Acești workeri sun
 const worker = new SharedWorker("aduDatele.js");
 ```
 
+Workerii nu pot fi folosiți pentru a modifica DOM-ul pentru că nu au acces la obiectul `window`.
+
 ## Contextul de execuție
 
 Web workerii nu se execută în conextul global cum are fi `window`. Contextul de execuție al acestora se numește `DedicatedWorkerGlobalScope`.
@@ -34,3 +36,4 @@ Metodele obiectelor intanțiate sunt `postMessage`, `onmessage`, și `onerror`. 
 
 - [Web Workers API, MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
 - [The State Of Web Workers In 2021 | Surma | jun 30, 2021](https://www.smashingmagazine.com/2021/06/web-workers-2021/)
+- [How Web Workers Work in JavaScript – With a Practical JS Example | Keyur Paralkar | JANUARY 4, 2022](https://www.freecodecamp.org/news/how-webworkers-work-in-javascript-with-example/)

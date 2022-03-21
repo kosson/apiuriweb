@@ -26,7 +26,7 @@ Este o matrice de transformare 3X2 sau o matrice 4X4.
 
 ### identity transform function
 
-O funcție de transformare este echivalentă unei matrici 4X4. 
+O funcție de transformare este echivalentă unei matrici 4X4.
 
 Exemple:
 
@@ -38,7 +38,7 @@ Exemple:
 Coordinate space are două axe: X și Y.
 Transformările sunt cumulative. Acest lucru înseamnă că, mai întâi de toate, elementele își stabilesc *local coordinate system* în interiorul sistemului de coordonate al părintelui. Din perspectiva utilizatorului, un element acumulează toate proprietățile `transform` ale părinților, precum și toate modificările *local transform* care le sunt aplicate. Acumularea acestor `transforms`, conduce la definirea unui `current transformation matrix` (CTM) pentru element.
 
-Acest `current transformation matrix` este calculat prin înmulțirea tuturor matricilor de transformare pornind de la *viewport coordinate system* și finalizând cu `transformation matrix` a unui element. La final, valoarea matricei de transformare, va fi modificată de fiecare transformare suferită pornind cu părinții. Acest lucru este firesc pentru că orice element este afectat de transformările aplicate părinților.
+Acest `current transformation matrix` este calculat prin înmulțirea tuturor matricilor de transformare pornind de la *viewport coordinate system* și finalizând cu `transformation matrix` al unui element. La final, valoarea matricei de transformare, va fi modificată de fiecare transformare suferită pornind cu părinții. Acest lucru este firesc pentru că orice element este afectat de transformările aplicate părinților.
 
 ## Referințe
 
