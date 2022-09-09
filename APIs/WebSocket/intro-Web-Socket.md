@@ -7,7 +7,7 @@ Interfețele pe care acest API le pune la dispoziție:
 - `CloseEvent`,
 - `MessageEvent`.
 
-Pentru a crea un socker web simplu se va folosi constructorul.
+Pentru a crea un socket web simplu pentru conectarea la server se va folosi constructorul.
 
 ```javascript
 const socket = new WebSocket("ws://ceva.ro");
@@ -19,3 +19,4 @@ const socket = new WebSocket("ws://ceva.ro");
 - [The WebSocket API (WebSockets) | MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 - [WebSocket | javascript.info](https://javascript.info/websocket)
 - [How JavaScript works: Deep dive into WebSockets and HTTP/2 with SSE + how to pick the right path | Alexander Zlatkov | Nov 1, 2017](https://blog.sessionstack.com/how-javascript-works-deep-dive-into-websockets-and-http-2-with-sse-how-to-pick-the-right-path-584e6b8e3bf7)
+- [Building a Complete WebSocket App From Scratch with JavaScript (with no libraries) - Crash Course | Erick Wendel](https://youtu.be/qFoFKLI3O8w)
