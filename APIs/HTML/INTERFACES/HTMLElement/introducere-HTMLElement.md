@@ -43,6 +43,8 @@ Returnează un `DOMStringMap` cu ajutorul căruia un script poate citi sau poate
 
 ### HTMLElement.style
 
+Această proprietate este o proprietate de tip `CSSStyleDeclaration` care reprezintă declarațiile atributului `style` al elementului.
+
 ### HTMLElement.tabIndex
 
 ### HTMLElement.title
