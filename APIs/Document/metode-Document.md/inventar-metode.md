@@ -25,6 +25,7 @@ Metoda creează un obiect `NodeIterator`.
 ## `createProcessingInstruction()`
 
 Metoda creează un obiect `Processinginstruction`.
+Pentru a crea un astfel de nod trebuie să specifici prin parametri `target`-ul, adică unde vrei să se aplice, și intrucțiunile în sine.
 
 ## `createRange()`
 
@@ -58,10 +59,6 @@ Creează un node de `Comment` prin returnarea unui nou obiect de tip `Comment`.
 ## `createCDATASection()`
 
 Creează un nod `CDATASection` care va avea valoarea specificată în parametru.
-
-## `createProcessingInstruction()`
-
-Pentru a crea un astfel de nod trebuie să specifici prin parametri `target`-ul, adică unde vrei să se aplice, și intrucțiunile în sine.
 
 ## `createAttribute()`
 
@@ -101,7 +98,7 @@ Metoda returnează un obiect `Selection` care reprezintă fragmentul de text sel
 
 ## `importNode()`
 
-Returnează o clonă a nodului dintr-un document extern.
+Returnează o clonă a unui `Node` sau a unui `DocumentFragment` dintr-un document extern. Această copie nu este insertată în DOM.
 
 ## `requestStorageAccess()`
 
