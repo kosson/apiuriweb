@@ -45,7 +45,7 @@ class NouElement extends HTMLElement {
 }
 ```
 
-Metoda `connectedCallback()` nu este constructorul. Această metodă adaugă conținut componentei și în general o inițializează.
+Metoda `connectedCallback()` nu este constructorul. Această metodă adaugă conținut componentei și, în general, o inițializează.
 
 ### lifecycle methods
 
@@ -110,7 +110,7 @@ const node = document.importNode(template.content, true);
 document.body.appendChild(node);
 ```
 
-Magia este realizată prin metoda `importNode` care va face o copie de adâncime (`true`) a conținutului (`template.content`) care va fi gata să fie inserată în document sau într-un document fragment. Dacă am fi utilizat `template.content` direct, l-am fi atașat DOM-ului, dar o funcție care are rolul să genereze mai multe noduri utilizând template-ul, nu va mai avea conținul acestuia la dispoziție (`null`) pentru că acesta a fost utizat fără copiere prin mutare.
+Magia este realizată prin metoda `importNode` care va face o copie de adâncime (`true`) a conținutului (`template.content`) care va fi gata să fie inserată în document sau într-un document fragment. Dacă am fi utilizat `template.content` direct, l-am fi atașat DOM-ului, dar o funcție care are rolul să genereze mai multe noduri utilizând template-ul, nu va mai avea conținul acestuia la dispoziție (`null`) pentru că acesta a fost utilizat fără copiere prin mutare.
 
 Metoda `importNode` permite utilizarea repetată a conținutului unui template.
 

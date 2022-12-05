@@ -16,7 +16,14 @@ Conținutul elementelor `<template>` vor fi parcurse de motorul browerului, dar 
 
 ## DOM
 
-Interfața DOM răspunzătoare pentru acest element este `HTMLTemplate​Element`, care are o proprietate `content`. Această proprietate este un `DocumentFragment` care conține un arbore DOM care este reprezentarea template-ului.
+Interfața DOM răspunzătoare pentru accesul la conținutul acestui element este `HTMLTemplate​Element`. Aceasta are o proprietate `content`. Această proprietate este un `DocumentFragment` (obiect care este un fragment de document DOM) care conține un arbore DOM read-only, fiind reprezentarea template-ului.
+
+```mermaid
+flowchart
+  subgraph moștenire
+  EventTarget[EventTarget] --> Node[Node] --> Element[Element] --> HTMLElement[HTMLElement] --> HTMLTemplateElement[HTMLTemplateElement]
+  end
+```
 
 Fragmentele pot fi clonate și inserate în document folosindu-se JavaScript.
 
@@ -58,9 +65,24 @@ for (let ub of date) {
 
   ins.appendChild(fișa);
 }
+
+// sau faci un `importNode`
+const template = document.querySelector('template');
+const node = document.importNode(template.content, true);
+ins.appendChild(node);
 ```
 
-## Atașarea de evenimente pe templateuri
+Există o diferență între `cloneNode()` și `importNode()`. Chiar dacă rezultatul pare același, `cloneNode()` este folosit atunci când clonezi un nod (adică ce este definit în `<template>`) din documentul curent. Când dorești să clonezi un nod dintr-un alt document, vei folosi `importNode()`. De exemplu, dintr-un `iframe`. Mai jos este un exemplu.
+
+```javascript
+let frame = document.getElementsByTagName("iframe")[0],
+    paragrafe = frame.contentWindow.document.getElementsByTagName("p")[0];
+document.importNode(paragrafe);
+```
+
+O metodă smilară lui `importNode` este `adoptNode()`, care va elimina nodul din documentul de origine.
+
+## Atașarea de evenimente pe template-uri
 
 Evenimentele pentru care atașezi receptori (funcții cu rol de callback) pe întregul template clonat, nu va funcționa pentru că vei lucra cu o instanță `DocumentFragment`. Pentru a avea posibilitatea de a crea elemente pe care să poți atașa evenimente, fă referință la elemente din interiorul template-ului: `template.content.firstElementChild.cloneNode(true)`.
 
@@ -76,6 +98,7 @@ for (var idx = 0; idx < taguri.length; idx += 1) {
 
 ## Resurse
 
--   [W3 HTML5 - A vocabulary and associated APIs for HTML and XHTML](https://www.w3.org/TR/html5/)
--   [HTML. Living Standard. 9 aprilie, 2018](https://html.spec.whatwg.org/multipage/scripting.html#the-template-element)
--   [Using templates and slots | MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots)
+- [W3 HTML5 - A vocabulary and associated APIs for HTML and XHTML](https://www.w3.org/TR/html5/)
+- [HTML. Living Standard. 9 aprilie, 2018](https://html.spec.whatwg.org/multipage/scripting.html#the-template-element)
+- [Using templates and slots | MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots)
+- [Document.importNode VS Node.cloneNode (real example) | stackoverflow | 2022](https://stackoverflow.com/questions/39372886/document-importnode-vs-node-clonenode-real-example)
