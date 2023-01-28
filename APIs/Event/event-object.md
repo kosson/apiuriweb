@@ -40,7 +40,7 @@ Este un Boolean care indică dacă poate fi anulat comportamentul din oficiu pen
 
 ### `event.currentTarget`
 
-Este o legătură către elementul pentru care s-a declanșat evenimentul. Obiectul la care se face legătura `this` pentru funcția cu rol de receptor este chiar `currentTarget`.
+Este o legătură către elementul căruia i s-a atașat evenimentul. Obiectul la care se face legătura `this` pentru funcția cu rol de receptor este chiar `currentTarget`.
 
 ### `event.defaultPrevented`
 
@@ -60,7 +60,7 @@ Este un număr întreg care indică în care fază s-a declanșat evenimentul:
 
 ### `event.target`
 
-Este elementul țintă pentru care s-a declanșat evenimentul. Acesta este strict elementul țintă. Nu este obiectul la care se face legătura `this` a funcției cu rol de callback. Doar dacă *receptorul* este setat direct pe element (DOM 2), atunci, `this`, `currentTarget` și `target` indică același obiect.
+Este elementul țintă care a declanșat evenimentul. A nu se confunda cu elementul care are handler-ul ce tratează evenimentul. Acela este accesibil folosind `currentTarget`. Acesta este strict elementul care a fost *țintit* de interacțiunea utilizatorului. Nu este obiectul la care se face legătura `this` a funcției cu rol de callback. Doar dacă *receptorul* este setat direct pe element (DOM 2), atunci, `this`, `currentTarget` și `target` indică același obiect.
 
 ```javascript
 let element = document.getElementById("ceva");
@@ -105,4 +105,8 @@ Este o metodă care întrerupe propagarea indiferent că este capturing sau bubb
 
 ### `stopPropagation()`
 
-Este o metodă care anulează propagarea evenimentului, fie că vorbim de capturing, fie de bubbling. Pentru a putea fi folosită, propritatea `bubbling` trebuie să fie setată la `true`.
+Este o metodă care anulează propagarea evenimentului, fie că vorbim de capturing, fie de bubbling. Pentru a putea fi folosită, proprietatea `bubbling` trebuie să fie setată la `true`.
+
+## Resurse
+
+- [Can you target an elements parent element using event.target? | stackoverflow](https://stackoverflow.com/questions/29168719/can-you-target-an-elements-parent-element-using-event-target)

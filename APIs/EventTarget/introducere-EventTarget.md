@@ -29,19 +29,19 @@ Trimite un eveniment către un `EventTarget`.
 ## Exemplu de implementare de la zero
 
 ```javascript
-var EventTarget = function() {
+var EventTarget = function () {
   this.listeners = {};
 };
 
 EventTarget.prototype.listeners = null;
-EventTarget.prototype.addEventListener = function(type, callback) {
+EventTarget.prototype.addEventListener = function (type, callback) {
   if (!(type in this.listeners)) {
     this.listeners[type] = [];
   }
   this.listeners[type].push(callback);
 };
 
-EventTarget.prototype.removeEventListener = function(type, callback) {
+EventTarget.prototype.removeEventListener = function (type, callback) {
   if (!(type in this.listeners)) {
     return;
   }
@@ -54,7 +54,7 @@ EventTarget.prototype.removeEventListener = function(type, callback) {
   }
 };
 
-EventTarget.prototype.dispatchEvent = function(event) {
+EventTarget.prototype.dispatchEvent = function (event) {
   if (!(event.type in this.listeners)) {
     return true;
   }
@@ -92,7 +92,7 @@ button.dispachEvent(new Event('click'));
 Cel mai adesea vei vedea în cod evenimentele sub forma exemplul de mai jos:
 
 ```javascript
-obiect.addEventListener("aparDate", function(date){ /*prelucrează date */ });
+obiect.addEventListener("aparDate", function (date) { /*prelucrează date */ });
 ```
 
 Pentru a crea un eveniment folosești metoda `dispatchEvent()`. Pentru asta, mai întâi creezi un eveniment, care este un obiect, ține minte și apoi îl *expediezi* (în engleză i se spune `dispatch`).
@@ -102,7 +102,7 @@ var evenimentSpecial = new EvenimentSpecial("urlet", {"animal": "gorilă"});
 obiect.dispatchEvent(evenimentSpecial);
 ```
 
-Atunci când obiectelor DOM li se trimit evenimente, acel eveniment poate să ajungă și la „receptorii” (*listeners*) obiectelor părinte ale respectivului element pentru care este obiectul DOM țintit. Toți receptorii din părinți ai căror variabilă `capture` este setată la `true`, vor fi invocați în ordinea ierarhiei părinților. Atenție, dacă atributul `bubbles` al evenimentului rămâne la valoarea `true`, receptorii părinților vor fi invocați din nou, dar în acest caz în ordine inversă.
+Atunci când obiectelor DOM li se trimit evenimente, acel eveniment poate să ajungă și la *receptorii* (*listeners*) obiectelor părinte ale respectivului element pentru care este obiectul DOM țintit. Toți receptorii din părinți ai căror variabilă `capture` este setată la `true`, vor fi invocați în ordinea ierarhiei părinților. Atenție, dacă atributul `bubbles` al evenimentului rămâne la valoarea `true`, receptorii părinților vor fi invocați din nou, dar în acest caz în ordine inversă.
 
 ## Debouncing
 
@@ -110,7 +110,7 @@ Aceasta este operațiunea care apare ca necesitate atunci când frecvența eveni
 
 ## Lucrul cu resurse la distanță
 
-Pentru a face apeluri care să aducă date din backend, vom folosit tot această interfață pentru că este nevoie să setăm „receptori” (*listeners*) pentru a fi avertizați atunci când resursele au venit.
+Pentru a face apeluri care să aducă date din backend, vom folosit tot această interfață pentru că este nevoie să setăm *receptori* (*listeners*) pentru a fi avertizați atunci când resursele au venit.
 
 ```javascript
 // declararea unei funcții de prelucrare a răspunsului primit

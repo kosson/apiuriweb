@@ -1,17 +1,19 @@
 # Evenimente
 
-„Programarea dictată de evenimente se întâmplă atunci când un sistem este interesat de un set de evenimente, oferă o cale de a fi anunțat atunci când evenimentele se întâmplă și răspunde la acestea folosind callback-uri”. (*Beautiful Javascript*, Jonathan Barronville). Evenimentele din DOM oferă o reprezentare a ceea ce se petrece în browser cum ar fi interacțiuni de bază: click-uri de mouse sau activități de notificare a unor accesări de date la distanță, cam tot ce ar putea să însemne dinamică, acțiune.
+> Programarea dictată de evenimente se întâmplă atunci când un sistem este interesat de un set de evenimente, oferă o cale de a fi anunțat atunci când evenimentele se întâmplă și răspunde la acestea folosind callback-uri. (*Beautiful Javascript*, Jonathan Barronville)
+
+Evenimentele din DOM oferă o reprezentare a ceea ce se petrece în browser cum ar fi interacțiuni de bază: click-uri de mouse sau activități de notificare a unor accesări de date la distanță. Cam tot ce ar putea să însemne dinamică, acțiune.
 
 La momentul în care un eveniment se declanșează, apelarea callback-ul are drept efect returnarea către program a unor date prelucrate.
 
 ## Mantre
 
--   HTML nu este DOM.
--   callback-ul este un closure care va fi invocat atunci când un anumit eveniment se întâmplă.
--   un eveniment este de fapt modificarea la un moment dat a stării unui sistem.
--   Evenimentele nu pornesc de la elementul care este cauza evenimentului (apăsarea unui buton), ci de la elementul rădăcină, de la `window` în cazul browserului și va merge din ramură în ramură până la elementul căruia îi este destinat. În drumul său, fiecare element din cale va „ști” despre acest eveniment. Acestă primă fază se numește `capturing phase`.
--   Capturarea unui eveniment returnează un eveniment. Datele depind de tipul evenimentului.
--   După ce evenimentul a ajuns la elementul țintit, acesta va porni înapoi către elementul rădăcină `window` alertând toate elementele din cale. Această fază se numește `bubbling phase` sau faza a doua.
+- HTML nu este DOM.
+- callback-ul este un closure care va fi invocat atunci când un anumit eveniment se întâmplă.
+- un eveniment este de fapt modificarea la un moment dat a stării unui sistem.
+- Evenimentele nu pornesc de la elementul care este cauza evenimentului (apăsarea unui buton), ci de la elementul rădăcină, de la `window` în cazul browserului și va merge din ramură în ramură până la elementul căruia îi este destinat. În drumul său, fiecare element din cale va *ști* despre acest eveniment. Această primă fază se numește `capturing phase`.
+- Capturarea unui eveniment returnează un eveniment. Datele depind de tipul evenimentului.
+- După ce evenimentul a ajuns la elementul țintit, acesta va porni înapoi către elementul rădăcină `window` alertând toate elementele din cale. Această fază se numește `bubbling phase` sau faza a doua.
 
 ## Anatomie
 
@@ -68,33 +70,33 @@ elementApasat.addEventListener("click", faCeva, true);
 
 Câteva informații interesante apar în consolă la o inspecție a conținutului obiectului eveniment:
 
--   `type`, fiind tipul evenimentului, în cazul nostru *click*;
--   `timestamp`, fiind momentul la care a apărut evenimentul;
--   `defaultPrevent()`, fiind un Boolean care dacă este `true` înseamnă că va împiedica comportamentul normal al elementului... gândește-te la un link împiedicat să deschidă pagina. Dacă este `false`, va face acel lucru, dacă e `true`, va avea un comportament deturnat în alt scop.
--   `originalTarget`, fiind elementul care a declanșat evenimentul.
--   `target`, fiind elementul țintit de eveniment.
+- `type`, fiind tipul evenimentului, în cazul nostru *click*;
+- `timestamp`, fiind momentul la care a apărut evenimentul;
+- `defaultPrevent()`, fiind un Boolean care dacă este `true` înseamnă că va împiedica comportamentul normal al elementului... gândește-te la un link împiedicat să deschidă pagina. Dacă este `false`, va face acel lucru, dacă e `true`, va avea un comportament deturnat în alt scop.
+- `originalTarget`, fiind elementul care a declanșat evenimentul.
+- `target`, fiind elementul țintit de eveniment.
 
 Și acum câteva informații utile privind poziționarea elementului:
 
--   screenX,Y îți dă poziția relativ la ecranul utilizatorului
--   clientX,Y își dă poziția relativ la fereastra deschisă
--   offsetX,Y îți dă poziția relativ la elementul care a inițiat evenimentul
--   pageX,Y îți dă poziția relativ la documentul HTML,
--   layerX,Y îți dă poziția față de un alt element.
+- `screenX,Y` îți dă poziția relativ la ecranul utilizatorului
+- `clientX,Y` își dă poziția relativ la fereastra deschisă
+- `offsetX,Y` îți dă poziția relativ la elementul care a inițiat evenimentul
+- `pageX,Y` îți dă poziția relativ la documentul HTML,
+- `layerX,Y` îți dă poziția față de un alt element.
 
 Poți obține informații despre care combinație de taste a fost folosită pentru a declanșa evenimentul:
 
--   altKey: false/true,
--   ctrlKey: false/true,
--   shiftKey: false/true.
+- altKey: false/true,
+- ctrlKey: false/true,
+- shiftKey: false/true.
 
 ## Propagarea evenimentului - event propagation
 
-Cele trei faze ale „călătoriei” unui obiect eveniment.
+Cele trei faze ale *călătoriei* unui obiect eveniment.
 
 ### Faza de captură - capturing phase
 
-Este faza în care obiectul eveniment „călătorește” până la părintele direct al țintei, pornind de cel mai de sus, adică de la `window`.
+Este faza în care obiectul eveniment *călătorește* până la părintele direct al țintei, pornind de cel mai de sus, adică de la `window`.
 
 ### Faza localizată pe țintă - target phase
 
@@ -130,7 +132,7 @@ Un element părinte va permite capturarea tuturor evenimentelor apărute la elem
 </html>
 ```
 
-Ceea ce se observă imediat este faptul că indiferent că am dat click pe oricare dintre cele două paragrafe, evenimentul a fost emis chiar dacă „receptorul” (event listener-ul) a fost setat la elementul părinte al celor două paragrafe.
+Ceea ce se observă imediat este faptul că indiferent că am dat click pe oricare dintre cele două paragrafe, evenimentul a fost emis chiar dacă *receptorul* (event listener-ul) a fost setat la elementul părinte al celor două paragrafe.
 
 Vom observa că proprietatea `target` a evenimentului, va avea valoarea elementului DOM care a fost acționat.
 
@@ -140,7 +142,7 @@ Să presupunem că avem două elemente unul fiind containerul celui de-al doilea
 
 Întrebarea este următoarea: care event handler s-a executat primul?
 
-Aici intervin cele două modele pentru a înțelege. A existat un moment când Netscape și Microsoft nu au căzut de acord asupra unui model comun și astfel, s-au născut două modele diferite care coexistă. Cel al lui Netscape care spune că evenimentul elementului gazdă se va declanșa primul, numindu-se „capturing” și modelul Microsoft care spune că elementul găzduit, cel care a fost acționat primul se va declanșa primul, numindu-se „bubbling”.
+Aici intervin cele două modele pentru a înțelege. A existat un moment când Netscape și Microsoft nu au căzut de acord asupra unui model comun și astfel, s-au născut două modele diferite care coexistă. Cel al lui Netscape care spune că evenimentul elementului gazdă se va declanșa primul, numindu-se *capturing* și modelul Microsoft care spune că elementul găzduit, cel care a fost acționat primul se va declanșa primul, numindu-se *bubbling*.
 
 ![](EventModelBubbling.png)
 
@@ -148,11 +150,11 @@ Aici intervin cele două modele pentru a înțelege. A existat un moment când N
 
 ### MODELUL CURENT
 
-Pentru armonizare, W3C a fost de acord ca cele două modele să coexiste după următorul scenariu: orice eveniment se declanșează, mai întâi de orice este capturat și este declanșat în toți copiii (dacă aceștia au event handlere - receptori cu true), până când ajunge la cel vizat (`target element`), după care face „bubbling”, adică se ridică din nou către gazdă declanșând toate *event handlere*-le pentru care tipul de eveniment are atașat un handler.
+Pentru armonizare, W3C a fost de acord ca cele două modele să coexiste după următorul scenariu: orice eveniment se declanșează, mai întâi de orice este capturat și este declanșat în toți copiii (dacă aceștia au event handlere - receptori cu true), până când ajunge la cel vizat (`target element`), după care face *bubbling*, adică se ridică din nou către gazdă declanșând toate *event handlere*-le pentru care tipul de eveniment are atașat un handler.
 
 ![](EventModelW3CModel.png)
 
-Partea bună este că te poți decide singur când vei „înregistra” evenimentul, fie în faza de capturare, fie în faza de bubbling folosind metoda `addEventListener`. Dacă cel de-al treilea argument este setat la `true`, atunci evenimentul va fi „înregistrat” la faza de *capturing*, iar inversul indică faza de *bubbling*.
+Partea bună este că te poți decide singur când vei *înregistra* evenimentul, fie în faza de capturare, fie în faza de bubbling folosind metoda `addEventListener`. Dacă cel de-al treilea argument este setat la `true`, atunci evenimentul va fi *înregistrat* la faza de *capturing*, iar inversul indică faza de *bubbling*.
 
 ## Oprește comportamentul implicit
 
@@ -166,11 +168,11 @@ selecțieLink.addEventListener('click', (eveniment) => {
 });
 ```
 
-Evenimentele sunt emise ca urmare a interacțiunii utilizatorului (a apăsat un buton) sau a încheierii unui proces cum ar fi accesarea asincronă a unor resurse. Unele evenimente pot să determine sau să controleze chiar comportamentul următoarelor evenimente care vor fi emise ca răspuns al primelor sau chiar poate fi urmat cursul anulării efectelor acțiunii primelor. Aceste acțiuni, aceste evenimente se numesc evenimente „anulabile” (*cancelable*), iar comportamentul pe care-l anulează este „efectul implicit” (*default action*) al evenimentului.
+Evenimentele sunt emise ca urmare a interacțiunii utilizatorului (a apăsat un buton) sau a încheierii unui proces cum ar fi accesarea asincronă a unor resurse. Unele evenimente pot să determine sau să controleze chiar comportamentul următoarelor evenimente care vor fi emise ca răspuns al primelor sau chiar poate fi urmat cursul anulării efectelor acțiunii primelor. Aceste acțiuni, aceste evenimente se numesc evenimente *anulabile* (*cancelable*), iar comportamentul pe care-l anulează este *efectul implicit* (*default action*) al evenimentului.
 
-Obiectele eveniment care pot fi anulate pot fi asociate cu una sau mai multe *efecte implicite*. Drept exemplu, standardul indică comportamentul unui eveniment `mouse down`. Pentru momentul în care utilizatorul apasă pe butonul mouse-ului pe un text sau poziționează săgeata mouse-ului pe o imagine, efectul implicit (*default action*) este ceea ce se întâmplă imediat după eveniment, iar acest lucru poate fi selecția textului sau modificarea imaginii. Anularea „efectului implicit” al evenimentului, de fapt elimină acțiunile pe care le poți face după poziționarea mouse-ului: selectarea textului sau deplasarea imaginii.
+Obiectele eveniment care pot fi anulate pot fi asociate cu una sau mai multe *efecte implicite*. Drept exemplu, standardul indică comportamentul unui eveniment `mouse down`. Pentru momentul în care utilizatorul apasă pe butonul mouse-ului pe un text sau poziționează săgeata mouse-ului pe o imagine, efectul implicit (*default action*) este ceea ce se întâmplă imediat după eveniment, iar acest lucru poate fi selecția textului sau modificarea imaginii. Anularea *efectului implicit* al evenimentului, de fapt elimină acțiunile pe care le poți face după poziționarea mouse-ului: selectarea textului sau deplasarea imaginii.
 
-Un alt exemplu oferit este cel al bifării unui checkbox. Dacă evenimentului `click` îi este anulat „efectul implicit”, pe ecran nu va mai apărea căsuța bifată iar valoarea va fi restaurata la cea anterioară.
+Un alt exemplu oferit este cel al bifării unui checkbox. Dacă evenimentului `click` îi este anulat *efectul implicit*, pe ecran nu va mai apărea căsuța bifată iar valoarea va fi restaurată la cea anterioară.
 
 ## Cazuistică
 
